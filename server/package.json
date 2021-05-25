@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "debug": "^4.3.1",
     "socket.io": "^4.0.1"
@@ -15,7 +16,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "DEBUG=server:* nodemon --config nodemon.json src/index.ts",
+    "dev": "DEBUG=server:* nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

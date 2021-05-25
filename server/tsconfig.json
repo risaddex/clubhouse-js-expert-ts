@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ESNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "target": "es6",
+    "target": "ESNext",
     "moduleResolution": "node",
-    "outDir": "dist",
     "allowJs": true,
     "incremental": true,
-    "noEmit": true
+    "allowUmdGlobalAccess": true,
+    "types": ["node", "debug", "socket.io"]
   },
   
 }
