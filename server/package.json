@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "debug": "^4.3.1",
+    "socket.io": "^4.0.1"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/node": "^15.6.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "DEBUG=server:* nodemon --config nodemon.json src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
