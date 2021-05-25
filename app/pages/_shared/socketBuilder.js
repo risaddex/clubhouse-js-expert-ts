@@ -1,9 +1,4 @@
-//Builder design pattern
 export default class SocketBuilder {
-    //  private readonly socketUrl: string;
-    //  private readonly namespace: string
-    //  private onUserConnected() {}
-    //  private onUserDisconnected() {}
     constructor({ socketUrl, namespace }) {
         this.socketUrl = `${socketUrl}/${namespace}`;
         this.onUserConnected = () => { };
@@ -18,9 +13,9 @@ export default class SocketBuilder {
         return this;
     }
     build() {
-        const socket = globalThis.io.connect((this.socketUrl, {
+        const socket = globalThis.io.connect(this.socketUrl, {
             withCredentials: false,
-        }));
+        });
         socket.on('connection', () => console.log('conectado'));
         socket.on("userConnection" /* USER_CONNECTED */, this.onUserConnected);
         socket.on("userDisconnection" /* USER_DISCONNECTED */, this.onUserDisconnected);

@@ -1,36 +1,38 @@
-//Builder design pattern
-export default class SocketBuilder {
-  //  private readonly socketUrl: string;
-  //  private readonly namespace: string
-  //  private onUserConnected() {}
-  //  private onUserDisconnected() {}
+import { Socket } from 'socket.io-client'
+import { ListenerCallback, socketEvents } from '../../../global'
 
-  constructor({socketUrl, namespace}) {
+//Builder design pattern 
+export type SocketBuilderArgs = {
+  socketUrl: string
+  namespace:string
+}
+export default class SocketBuilder {
+  onUserConnected: ListenerCallback
+  private onUserDisconnected: ListenerCallback
+  private readonly socketUrl: string
+
+  constructor({socketUrl, namespace}:SocketBuilderArgs) {
     this.socketUrl = `${socketUrl}/${namespace}`
     this.onUserConnected = () => {}
     this.onUserDisconnected = () => {}
   }
 
-  setOnUserConnected(fn) {
+  setOnUserConnected(fn:ListenerCallback) {
     this.onUserConnected = fn
 
     return this
   }
 
-  setOnUserDisconnected(fn) {
+  setOnUserDisconnected(fn:ListenerCallback) {
     this.onUserDisconnected = fn
 
     return this
   }
 
   build() {
-
-    const socket = globalThis.io.connect((this.socketUrl, {
+    const socket = globalThis.io.connect(this.socketUrl, {
       withCredentials: false,
-      
-    }))
-
-    
+    }) as Socket
 
     socket.on('connection', () => console.log('conectado'))
 
