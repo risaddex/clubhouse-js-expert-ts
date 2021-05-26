@@ -29,6 +29,7 @@ export default class LobbyController {
   }
 
   private async init() {
+    this.setupViewEvents()
     this.socket = this.setupSocket()
   }
 
@@ -36,6 +37,11 @@ export default class LobbyController {
     return this.socketBuilder
     .setOnLobbyUpdated(this.onLobbyUpdated())
     .build()
+  }
+
+  private setupViewEvents() {
+    // this.view.updateUserImage(this.user)
+    this.view.configureCreateRoomButton()
   }
 
   private onLobbyUpdated(): ListenerCallback{

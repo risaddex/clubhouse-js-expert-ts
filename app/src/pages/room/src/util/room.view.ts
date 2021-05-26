@@ -1,3 +1,4 @@
+import { TUser } from '../../../../../../global.js'
 import Attendee from '../entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
@@ -7,7 +8,7 @@ const gridAttendees = document.getElementById('gridAttendees')
 const gridSpeakers = document.getElementById('gridSpeakers')
 
 export default class View {
-  static updateUserImage({ img, username }: { img: string; username: string }) {
+  static updateUserImage({ img, username }:TUser) {
     userAvatar.src = img
     userAvatar.alt = username
   }
