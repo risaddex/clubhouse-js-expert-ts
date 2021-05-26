@@ -1,17 +1,16 @@
 import { Socket } from 'socket.io-client'
-import { ListenerCallback, socketEvents } from '../../../global'
+import { ListenerCallback, socketEvents } from '../../../../global'
 
 //Builder design pattern 
-export type SocketBuilderArgs = {
-  socketUrl: string
-  namespace:string
-}
+
 export default class SocketBuilder {
   onUserConnected: ListenerCallback
-  private onUserDisconnected: ListenerCallback
-  private readonly socketUrl: string
+  onUserDisconnected: ListenerCallback
+  socketUrl: string
+  namespace: string
+  
 
-  constructor({socketUrl, namespace}:SocketBuilderArgs) {
+  constructor({socketUrl, namespace}:SocketBuilder) {
     this.socketUrl = `${socketUrl}/${namespace}`
     this.onUserConnected = () => {}
     this.onUserDisconnected = () => {}
@@ -25,16 +24,15 @@ export default class SocketBuilder {
 
   setOnUserDisconnected(fn:ListenerCallback) {
     this.onUserDisconnected = fn
-
     return this
   }
-
+  
   build() {
-    const socket = globalThis.io.connect(this.socketUrl, {
+    const socket: Socket = globalThis.io.connect(this.socketUrl, {
       withCredentials: false,
-    }) as Socket
+    })
 
-    socket.on('connection', () => console.log('conectado'))
+    socket.on('connect', () => console.log(`Você está conectado na sala ${socket.id}.`))
 
     socket.on(socketEvents.USER_CONNECTED, this.onUserConnected)
     socket.on(socketEvents.USER_DISCONNECTED, this.onUserDisconnected)

@@ -1,10 +1,9 @@
 import debug from 'debug'
 import Event from 'events'
 import { AddressInfo } from 'net'
-import { socketEvents } from '../../global.js'
+import { RouteConfig, socketEvents } from '../../global.js'
 import RoomsController from './controllers/roomsController.js'
 import SocketServer from './util/socket.js'
-
 
 const log = debug('server:socketserver')
 const port = Number(process.env.PORT) || 3000
@@ -29,21 +28,20 @@ const namespaces = {
 // namespaces.room.eventEmitter.emit(socketEvents.USER_CONNECTED, {id: '002'})
 // namespaces.room.eventEmitter.em it(socketEvents.USER_CONNECTED, {id: '003'})
 
-const routeConfig = Object.entries(namespaces)
-.map(([namespace, {controller, eventEmitter}]) => {
-  const controllerEvents = controller.getEvents()
-  eventEmitter.on(
-    socketEvents.USER_CONNECTED,
-    controller.onNewConnection.bind(controller)
-  )
+const routeConfig = Object.entries(namespaces).map(
+  ([namespace, { controller, eventEmitter }]) => {
+    const controllerEvents = controller.getEvents()
+    eventEmitter.on(
+      socketEvents.USER_CONNECTED,
+      controller.onNewConnection.bind(controller)
+    )
 
-  return {
-    [namespace]: { events: controllerEvents, eventEmitter}
+    return {
+      [namespace]: { events: controllerEvents, eventEmitter },
+    }
   }
-})
+)
 
-
-socketServer.attachEvents({routeConfig})
-
+socketServer.attachEvents({ routeConfig })
 
 log(`socket server is running at ${runningPort}`)

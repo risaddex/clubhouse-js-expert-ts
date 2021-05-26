@@ -1,4 +1,3 @@
-import EventEmitter from 'events'
 import Event from 'events'
 
 declare const enum constants {
@@ -10,6 +9,7 @@ declare const enum socketEvents {
   USER_DISCONNECTED = 'userDisconnection',
   JOIN_ROOM = 'joinRoom',
   LOBBY_UPDATED = 'lobbyUpdated',
+  UPGRADE_USER_PERMISSION = 'upgradeUserPermission',
 }
 
 declare const enum socketNamespaces {
@@ -38,7 +38,7 @@ declare type TRoom = {
 }
 
 declare type TUser = {
-  id: string
+  id?: string
   img: string
   username: string
 }
@@ -51,9 +51,9 @@ declare interface IAttendee extends TUser {
 
 declare type ListenerCallback = (...args: any[]) => void
 
-declare type RouteConfig = {
-  room: {
-    events: Map<string, Function>
+declare interface RouteConfig {
+  room?: {
+    events: Map<string, () => void>
     eventEmitter: Event
   }
 }

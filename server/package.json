@@ -15,8 +15,8 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "DEBUG=server:* nodemon src/index.js",
+    "start": "node dist/index.js",
+    "dev": "DEBUG=server:* nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

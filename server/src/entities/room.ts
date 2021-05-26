@@ -1,14 +1,13 @@
-import { IAttendee } from '../../../global'
 import Attendee from './attendee.js'
 
-export default class Room{
-  readonly id: string
-  readonly topic: string
-  readonly attendeesCount: number
-  readonly speakersCount: number
-  readonly featuredAttendees?: IAttendee[]
-  readonly owner: Attendee
-  readonly users: Set<IAttendee>
+export default class Room {
+  id: string
+  topic: string
+  attendeesCount: number
+  speakersCount: number
+  featuredAttendees?: Attendee[]
+  owner: Attendee
+  users: Set<Attendee>
 
   constructor({
     attendeesCount,

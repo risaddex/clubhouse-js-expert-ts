@@ -1,17 +1,26 @@
-import { ListenerCallback, SocketBuilderOptions, socketEvents } from '../../../../../global'
+import { ListenerCallback, SocketBuilderOptions, socketEvents } from '../../../../../../global'
 import SocketBuilder from '../../../_shared/socketBuilder.js'
 
 export default class RoomSocketBuilder extends SocketBuilder {
   onRoomUpdated: ListenerCallback
+  onUserProfileUpgrade: ListenerCallback
+  socketUrl: string
+  namespace: string
   
   constructor({ socketUrl, namespace }:SocketBuilderOptions) {
-    super({ socketUrl, namespace })
+    super({namespace, socketUrl} as RoomSocketBuilder)
     this.onRoomUpdated = () => {}
+    this.onUserProfileUpgrade = () => {}
+
   }
 
   setOnRoomUpdated(fn: ListenerCallback) {
     this.onRoomUpdated = fn
+    return this 
+  }
 
+  setOnUserProfileUpgrade(fn: ListenerCallback) {
+    this.onUserProfileUpgrade = fn
     return this
   }
 

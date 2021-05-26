@@ -8,7 +8,8 @@
     "allowJs": true,
     "incremental": true,
     "allowUmdGlobalAccess": true,
-    "types": ["node"]
+    "types": ["node", "socket.io-client"],
   },
+  "include": ["src/**/*.ts"]
   
 }

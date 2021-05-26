@@ -242,8 +242,8 @@
         "affectsGlobalScope": false
       },
       "../global.d.ts": {
-        "version": "84053f3c167c2bcee4f26736301bd51954aa3f5617e897699b300a864e5ebf54",
-        "signature": "84053f3c167c2bcee4f26736301bd51954aa3f5617e897699b300a864e5ebf54",
+        "version": "fe34bf3d401902e2c197e4ac70caa75e10c43ad37a1d5f953b109d9ce894428f",
+        "signature": "fe34bf3d401902e2c197e4ac70caa75e10c43ad37a1d5f953b109d9ce894428f",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/node/assert/strict.d.ts": {
@@ -567,13 +567,13 @@
         "affectsGlobalScope": false
       },
       "./src/entities/room.ts": {
-        "version": "21b1e96d0d7c3a13dfc165c93f0dcbb28e6c11ef0e58b3f72c0ed9e9f13a702a",
-        "signature": "aae215c48f246ab9f499bf4792a5709db14f7cc9cc82413c22522b11b4a12e45",
+        "version": "2dcb4ba9e396e4a600e6525c9fc339cc807a883b6887d87d2a98d9391c431084",
+        "signature": "5839c3f484a0109f69f7d66793f72e4b08ee029bb728f0f5888638b5ce1d13cd",
         "affectsGlobalScope": false
       },
       "./src/controllers/roomsController.ts": {
-        "version": "307a8fe93731def328eabaaa27b535e255a5304db7f0e8ecf492e9c776206a88",
-        "signature": "6b61e61adb933ad2a2d8061c115241f49a1a4c9b405f97f987fb37fd086b9bdc",
+        "version": "cad8d2c1c3b0e8f7f2a3285f80fa0d7bc3a797ed231349f10ae63aa2cbe406d6",
+        "signature": "9b2b5d0d069049db073b17af21b0d3b051776fb3d94b82105e6162bfb66d8536",
         "affectsGlobalScope": false
       },
       "./src/util/socket.ts": {
@@ -582,7 +582,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "dbf1cd9c458a0a9defc0545b9dde29643714d9267399e542d283fd6820cb7d47",
+        "version": "2f7323aac534b3880ef9d001fe88b42dfdec4572a075a7c9468355fe2be7197b",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       }
@@ -596,6 +596,8 @@
       "allowJs": true,
       "incremental": true,
       "allowUmdGlobalAccess": true,
+      "rootDir": "./src",
+      "outDir": "./dist",
       "types": [
         "node",
         "debug",
@@ -871,7 +873,6 @@
         "../global.d.ts"
       ],
       "./src/entities/room.ts": [
-        "../global.d.ts",
         "./src/entities/attendee.ts"
       ],
       "./src/index.ts": [
@@ -1154,7 +1155,6 @@
         "../global.d.ts"
       ],
       "./src/entities/room.ts": [
-        "../global.d.ts",
         "./src/entities/attendee.ts"
       ],
       "./src/util/socket.ts": [
@@ -1278,48 +1278,7 @@
       "./src/controllers/roomsController.ts",
       "./src/entities/attendee.ts",
       "./src/entities/room.ts",
-      [
-        "./src/index.ts",
-        [
-          {
-            "file": "./src/index.ts",
-            "start": 1426,
-            "length": 11,
-            "code": 2322,
-            "category": 1,
-            "messageText": {
-              "messageText": "Type '{ [x: string]: { events: Map<string, Function>; eventEmitter: EventEmitter; }; }[]' is not assignable to type 'RouteConfig[]'.",
-              "category": 1,
-              "code": 2322,
-              "next": [
-                {
-                  "messageText": "Property 'room' is missing in type '{ [x: string]: { events: Map<string, Function>; eventEmitter: Event; }; }' but required in type 'RouteConfig'.",
-                  "category": 1,
-                  "code": 2741
-                }
-              ]
-            },
-            "relatedInformation": [
-              {
-                "file": "../global.d.ts",
-                "start": 921,
-                "length": 4,
-                "messageText": "'room' is declared here.",
-                "category": 3,
-                "code": 2728
-              },
-              {
-                "file": "./src/util/socket.ts",
-                "start": 555,
-                "length": 11,
-                "messageText": "The expected type comes from property 'routeConfig' which is declared here on type '{ routeConfig: RouteConfig[]; }'",
-                "category": 3,
-                "code": 6500
-              }
-            ]
-          }
-        ]
-      ],
+      "./src/index.ts",
       "./src/util/socket.ts"
     ]
   },
