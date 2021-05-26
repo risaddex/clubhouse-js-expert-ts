@@ -4,11 +4,15 @@ import RoomSocketBuilder from "./util/roomSocketBuilder.js"
 import View from "./util/room.view.js"
 
 
-const room = {
-  id: '0001',
-  topic: 'JS expert'
-}
+const urlParams = new URLSearchParams(window.location.search)
+const keys = ['id', 'topic']
 
+const urlData = keys.map((key) => [key, urlParams.get(key)])
+
+const room = {
+  ...Object.fromEntries(urlData)
+
+}
 const user = {
   img: 'https://placekitten.com/100/100',
   username: 'Danilo_' + Date.now()
