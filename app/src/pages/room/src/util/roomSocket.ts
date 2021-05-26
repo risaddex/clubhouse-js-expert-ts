@@ -8,7 +8,7 @@ export default class RoomSocketBuilder extends SocketBuilder {
   namespace: string
   
   constructor({ socketUrl, namespace }:SocketBuilderOptions) {
-    super({namespace, socketUrl} as RoomSocketBuilder)
+    super({namespace, socketUrl} as SocketBuilder)
     this.onRoomUpdated = () => {}
     this.onUserProfileUpgrade = () => {}
 
@@ -28,6 +28,7 @@ export default class RoomSocketBuilder extends SocketBuilder {
     const socket = super.build()
 
     socket.on(socketEvents.LOBBY_UPDATED, this.onRoomUpdated)
+    socket.on(socketEvents.UPGRADE_USER_PERMISSION, this.onUserProfileUpgrade)
     return socket
   }
 }

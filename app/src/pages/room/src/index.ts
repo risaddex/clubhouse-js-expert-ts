@@ -25,17 +25,17 @@ const dependencies = {
     roomInfo
 };
 // Será suportado no firefox 89
-await RoomController.initialize(dependencies)
+// await RoomController.initialize(dependencies)
 
-// async function initializeWithRetry(){
-//   try {
-//     await RoomController.initialize(dependencies)
-//   } catch (error) {
-//     console.log(error)
-//     setTimeout(() => {
-//       initializeWithRetry()
-//     }, 2000)
-//   }
-// }
+async function initializeWithRetry(){
+  try {
+    await RoomController.initialize(dependencies)
+  } catch (error) {
+    console.log(error)
+    setTimeout(() => {
+      initializeWithRetry()
+    }, 2000)
+  }
+}
 
-// initializeWithRetry()
+initializeWithRetry()

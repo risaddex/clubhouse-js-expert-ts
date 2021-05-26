@@ -56,14 +56,14 @@ export default class RoomController {
     return (user: Attendee) => {
       console.log('onUserProfileUpgrade', user)
       if (user.isSpeaker) {
-        this.view.addAttendeeOnGrid(user)
+        this.view.addAttendeeOnGrid(user, true)
       }
     }
   }
 
   private onRoomUpdated(): ListenerCallback {
     return (roomList: Attendee[]) => {
-      console.log('room list!', roomList)
+      console.log('room list:', roomList)
       this.view.updateAttendeesOnGrid(roomList)
     }
   }

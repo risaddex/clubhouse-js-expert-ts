@@ -17,10 +17,16 @@ export default class View {
   }
 
   static updateAttendeesOnGrid(users: Attendee[]) {
-    users.forEach((attendee) => this.addAttendeeOnGrid(attendee))
+    users?.forEach((attendee) => this.addAttendeeOnGrid(attendee))
   }
 
-  static getExistingItemOnGrid({ id, baseElement }:{id:string; baseElement?:HTMLElement}) {
+  static getExistingItemOnGrid({
+    id,
+    baseElement = document
+  }: {
+    id: string
+    baseElement?: Partial<Document | HTMLElement>
+  }) {
     // busca o nó do documento
     const existingItem = baseElement?.querySelector(`[id="${id}"]`)
     return existingItem
@@ -31,23 +37,23 @@ export default class View {
     existingElement?.remove()
   }
 
-  static  addAttendeeOnGrid(attendee: Attendee, removeFirst = false) {
+  static addAttendeeOnGrid(attendee: Attendee, removeFirst = false) {
     const user = new Attendee(attendee)
-    const htmlTemplate =  getTemplate(user)
+    const htmlTemplate = getTemplate(user)
     const id = user.id
     const baseElement = user.isSpeaker ? gridSpeakers : gridAttendees
 
     if (removeFirst) {
-      View.removeItemFromGrid(user.id)
+      this.removeItemFromGrid(id)
       baseElement.innerHTML += htmlTemplate
       return;
     }
 
-    const existingItem = this.getExistingItemOnGrid({id, baseElement})
+    const existingItem = this.getExistingItemOnGrid({ id, baseElement })
 
     if (existingItem) {
       existingItem.innerHTML = htmlTemplate
-      return;
+      return; 
     }
 
     baseElement.innerHTML += htmlTemplate
