@@ -1,10 +1,12 @@
 // Essa classe mapeia os eventos que ocorrem na sala
 import debug from 'debug'
+import Event from 'events'
 import { Socket } from 'socket.io'
 import { socketEvents, TUser } from '../../../global'
 import { BaseController } from '../../types'
 import Attendee from '../entities/attendee.js'
 import Room from '../entities/room.js'
+import CustomMap from '../util/customMap.js'
 const log = debug('server:roomsController')
 
 
@@ -12,12 +14,33 @@ type RoomData = {
   room: Room
   user?: TUser
 }
+
+type RoomsControllerArgs = {
+  roomsPubSub: Event
+}
 export default class RoomsController implements BaseController {
   #users?: Map<string, Attendee> = new Map()
   rooms?: Map<string, Room>
+  roomsPubSub: Event
 
-  constructor() {
-    this.rooms = new Map()
+  constructor({roomsPubSub}:RoomsControllerArgs) {
+    this.roomsPubSub = roomsPubSub
+    this.rooms = new CustomMap({
+      observer: this.#roomObserver(),
+      customMapper: this.#mapRoom.bind(this)
+      
+    })
+  }
+  // @ts-expect-error
+  #roomObserver(){
+    return {
+      notify: (rooms:Room[]) => this.notifyRoomSubscribers(rooms)
+    }
+  }
+
+  notifyRoomSubscribers(rooms:Room[]) {
+    const event = socketEvents.LOBBY_UPDATED
+    this.roomsPubSub.emit(event, [...rooms.values()])
   }
 
   onNewConnection(socket: Socket) {

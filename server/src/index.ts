@@ -15,7 +15,9 @@ const { port: runningPort } = server.address() as AddressInfo
 
 const roomsPubSub = new Event()
 
-const roomsController = new RoomsController()
+const roomsController = new RoomsController({
+  roomsPubSub
+})
 
 const lobbyController = new LobbyController({
   activeRooms: roomsController.rooms,

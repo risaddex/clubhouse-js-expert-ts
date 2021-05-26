@@ -26,6 +26,14 @@ export default class LobbyController implements BaseController {
     const {id} = socket
     log(`connection established with ${id}`)
     this.#updateLobbyRooms(socket, [...this.activeRooms.values()])
+
+    this.#activateEventProxy(socket)
+  }
+  //@ts-expect-error
+  #activateEventProxy(socket:Socket){
+    this.roomsListener.on(socketEvents.LOBBY_UPDATED, (rooms) => {
+      this.#updateLobbyRooms(socket, rooms)
+    })
   }
   
   getEvents(): Map<string, Function> {
