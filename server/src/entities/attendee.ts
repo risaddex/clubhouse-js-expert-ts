@@ -1,14 +1,14 @@
-import {IAttendee } from "../../../global"
+import { BaseAttendee } from "../../../global"
 
-export default class Attendee implements IAttendee {
+export default class Attendee implements BaseAttendee {
     id: string
     isSpeaker: boolean
     roomId: string
     img: string
-    username: string
+    username: string 
     peerId?: string
 
-  constructor({ id, img, isSpeaker, roomId, username, peerId }: IAttendee) {
+  constructor({ id, img, isSpeaker, roomId, username, peerId }: BaseAttendee) {
     this.id = id
     this.img = img
     this.isSpeaker = isSpeaker

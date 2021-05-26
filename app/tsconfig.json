@@ -7,8 +7,6 @@
     "moduleResolution": "node",
     "allowJs": true,
     "incremental": true,
-    "allowUmdGlobalAccess": true,
-    "types": ["node", "socket.io-client"],
   },
   "include": ["src/**/*.ts"]
   

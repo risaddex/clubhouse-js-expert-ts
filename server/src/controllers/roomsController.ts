@@ -1,7 +1,8 @@
 // Essa classe mapeia os eventos que ocorrem na sala
 import debug from 'debug'
 import { Socket } from 'socket.io'
-import { socketEvents, TRoom, TUser } from '../../../global'
+import { socketEvents, TUser } from '../../../global'
+import { BaseController } from '../../types'
 import Attendee from '../entities/attendee.js'
 import Room from '../entities/room.js'
 const log = debug('server:roomsController')
@@ -11,7 +12,7 @@ type RoomData = {
   room: Room
   user?: TUser
 }
-export default class RoomsController {
+export default class RoomsController implements BaseController {
   #users?: Map<string, Attendee> = new Map()
   rooms?: Map<string, Room>
 
@@ -175,7 +176,7 @@ export default class RoomsController {
 
   //@ts-expect-error
   #updateGlobalUserData(userId: string, userData?: TUser, roomId?: string) {
-    const user = this.#users.get(userId) ?? {}
+    const user = this.#users.get(userId) ?? {} as Attendee
     const existingRoom = this.rooms.has(roomId)
 
     const updatedUserData = new Attendee({
@@ -190,22 +191,15 @@ export default class RoomsController {
     return this.#users.get(userId)
   }
 
-  getEvents() {
+  getEvents():Map<string, Function> {
     //navegar entre a estrutura para pegar as funções publicas
 
     //captura o nome das funções publicas
     const functions = Reflect.ownKeys(RoomsController.prototype)
-      .filter((fn) => fn !== 'constructor')
-      .map((name) => [name, this[name].bind(this)])
+      .filter((fn:string) => fn !== 'constructor')
+      .map((name:string) => [name, this[name].bind(this)])
 
-    return new Map(functions as [string, Function][])
+    return new Map(functions as any)
 
-    /**
-     * [
-     *    ['onNewConnection', this.onNewConnection] ,
-     *    ['disconnect', this.disconnect],
-     * ]
-     *
-     */
   }
 }

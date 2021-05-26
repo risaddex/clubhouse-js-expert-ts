@@ -5,8 +5,8 @@ import {
   socketEvents,
 } from '../../../../../../global'
 import Attendee from '../entities/attendee.js'
-import RoomSocketBuilder from './roomSocket.js'
-import View from './view.js'
+import RoomSocketBuilder from './roomSocketBuilder.js'
+import View from './room.view.js'
 
 export type InitializeDeps = {
   view: typeof View

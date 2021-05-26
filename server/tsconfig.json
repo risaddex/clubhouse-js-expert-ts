@@ -7,10 +7,9 @@
     "moduleResolution": "node",
     "allowJs": true,
     "incremental": true,
-    "allowUmdGlobalAccess": true,
-    "rootDir": "src",
     "outDir": "dist",
     "types": ["node", "debug", "socket.io"]
   },
+  "include": ["src/**/*.ts"]
   
 }

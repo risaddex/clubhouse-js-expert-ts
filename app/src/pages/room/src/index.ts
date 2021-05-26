@@ -1,7 +1,8 @@
-import { constants, RoomData, socketNamespaces, TUser } from "../../../../../global"
-import RoomController from './util/controller.js'
-import RoomSocketBuilder from "./util/roomSocket.js"
-import View from "./util/view.js"
+import { constants, RoomData, socketNamespaces } from "../../../../../global"
+import RoomController from './util/room.controller.js'
+import RoomSocketBuilder from "./util/roomSocketBuilder.js"
+import View from "./util/room.view.js"
+
 
 const room = {
   id: '0001',

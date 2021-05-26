@@ -1,7 +1,8 @@
 import debug from 'debug'
 import Event from 'events'
 import { AddressInfo } from 'net'
-import { RouteConfig, socketEvents } from '../../global.js'
+import { socketEvents } from '../../global.js'
+import LobbyController from './controllers/lobbycontroller.js'
 import RoomsController from './controllers/roomsController.js'
 import SocketServer from './util/socket.js'
 
@@ -12,10 +13,18 @@ const socketServer = new SocketServer({ port })
 const server = await socketServer.start()
 const { port: runningPort } = server.address() as AddressInfo
 
+const roomsPubSub = new Event()
+
 const roomsController = new RoomsController()
+
+const lobbyController = new LobbyController({
+  activeRooms: roomsController.rooms,
+  roomsListener: roomsPubSub
+})
 
 const namespaces = {
   room: { controller: roomsController, eventEmitter: new Event() },
+  lobby: { controller: lobbyController, eventEmitter: roomsPubSub },
 }
 
 // Quando o usuário se conecta, emite o evento

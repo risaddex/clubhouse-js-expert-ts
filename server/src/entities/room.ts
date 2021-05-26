@@ -1,22 +1,14 @@
+import { BaseAttendee, BaseRoom } from '../../../global.js'
 import Attendee from './attendee.js'
 
-type TRoomConstructorProps = {
+export default class Room implements BaseRoom {
   id: string
   topic: string
   attendeesCount: number
   speakersCount: number
-  featuredAttendees: Attendee[]
-  owner: Attendee
-  users: Set<Attendee>
-}
-export default class Room {
-  id: string
-  topic: string
-  attendeesCount: number
-  speakersCount: number
-  featuredAttendees?: Attendee[]
-  owner: Attendee
-  users: Set<Attendee>
+  featuredAttendees?: BaseAttendee[]
+  owner: BaseAttendee
+  users: Set<BaseAttendee>
 
   constructor({
     attendeesCount,
@@ -26,13 +18,13 @@ export default class Room {
     topic,
     users,
     featuredAttendees,
-  }: TRoomConstructorProps) {
+  }:BaseRoom) {
     this.attendeesCount = attendeesCount
     this.id = id
     this.owner = owner
     this.speakersCount = speakersCount
     this.topic = topic
     this.users = users
-    this.featuredAttendees = featuredAttendees
+    this.featuredAttendees = featuredAttendees?.map(attendee => new Attendee(attendee))
   }
 }

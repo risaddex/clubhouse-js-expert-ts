@@ -1,4 +1,4 @@
-import { IAttendee } from '../../../../../../global'
+import { BaseAttendee } from '../../../../../../global'
 
 type AttendeeOptions = {
   isSpeaker: boolean
@@ -7,10 +7,8 @@ type AttendeeOptions = {
   id: string
   img: string
   username: string
-  lastName: string
-  firstName: string
 }
-export default class Attendee implements IAttendee {
+export default class Attendee implements BaseAttendee {
   isSpeaker: boolean
   roomId: string
   peerId: string

@@ -27,6 +27,10 @@ declare type EventMap = {
   eventEmitter: Function
 }
 
+declare type RoomData = {
+  room: TRoom
+  user?: TUser
+}
 
 declare type TRoom = {
   id: string
@@ -39,12 +43,6 @@ declare type TUser = {
   username: string
 }
 
-declare interface IAttendee extends TUser {
-  isSpeaker: boolean
-  roomId: string
-  peerId?: string
-}
-
 declare type ListenerCallback = (...args: any[]) => void
 
 declare interface RouteConfig {
@@ -52,4 +50,27 @@ declare interface RouteConfig {
     events: Map<string, () => void>
     eventEmitter: Event
   }
+}
+
+declare abstract class BaseRoom {
+  id: string
+  topic: string
+  attendeesCount: number
+  speakersCount: number
+  featuredAttendees?: TUser[]
+  owner: TUser
+  users?: Set<TUser>
+  subtopic?: string
+  roomLink?: string
+
+}
+
+declare abstract class BaseAttendee {
+  id: string
+  isSpeaker: boolean
+  roomId: string
+  img: string
+  username: string
+  peerId?: string
+
 }

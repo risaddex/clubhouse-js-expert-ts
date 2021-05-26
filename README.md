@@ -27,7 +27,7 @@ Marque esse projeto com uma estrela 🌟
 
 - Lobby
   - [ ] Se não houver dados do usuario em localStorage deve voltar para login
-  - [ ] Mostra todas as salas ativas
+  - [x] Mostra todas as salas ativas
   - [ ] Atualiza salas em realtime
   - [ ] Pode criar uma sala sem topico
   - [ ] Pode criar uma sala com topico
@@ -38,11 +38,11 @@ Marque esse projeto com uma estrela 🌟
   - [x] Todos usuários futuros entram com perfil de attendees
   - [ ] Notifica Lobby sobre atualizações na sala
   - [x] Lista usuarios com perfis de speakers e attendees
-  - [ ] Se o dono da sala desconectar, será removida
+  - [x] Se o dono da sala desconectar, será removida
   - Users
     - Speaker
       - [ ] Recebe notificação de attendees para se tornarem speakers
-      - [ ] Atualizam a tela o upgrade de attendee para speaker
+      - [x] Atualizam a tela o upgrade de attendee para speaker
       - [ ] Poderá deixar seu microfone mudo
       - Se dono da sala
         - [ ] Pode aprovar attendees a virarem speakers
