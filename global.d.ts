@@ -27,10 +27,6 @@ declare type EventMap = {
   eventEmitter: Function
 }
 
-declare type RoomData = {
-  room: TRoom
-  user: TUser
-}
 
 declare type TRoom = {
   id: string

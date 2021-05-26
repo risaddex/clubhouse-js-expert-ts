@@ -242,8 +242,8 @@
         "affectsGlobalScope": false
       },
       "../global.d.ts": {
-        "version": "fe34bf3d401902e2c197e4ac70caa75e10c43ad37a1d5f953b109d9ce894428f",
-        "signature": "fe34bf3d401902e2c197e4ac70caa75e10c43ad37a1d5f953b109d9ce894428f",
+        "version": "336870dac356cfab5e13f54edc988b0f6ba316cce2ba9fa858eed602bc214d15",
+        "signature": "336870dac356cfab5e13f54edc988b0f6ba316cce2ba9fa858eed602bc214d15",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/node/assert/strict.d.ts": {
@@ -567,13 +567,13 @@
         "affectsGlobalScope": false
       },
       "./src/entities/room.ts": {
-        "version": "2dcb4ba9e396e4a600e6525c9fc339cc807a883b6887d87d2a98d9391c431084",
-        "signature": "5839c3f484a0109f69f7d66793f72e4b08ee029bb728f0f5888638b5ce1d13cd",
+        "version": "0f603793c6f2652cdc2626d87a8b0a9abf6eb0073aaa76d8346945b98163b72b",
+        "signature": "7f470e0c6b7786baf7269fe08db5b0f87e6d09c8ba442e18d7f16fd436f6bcfc",
         "affectsGlobalScope": false
       },
       "./src/controllers/roomsController.ts": {
-        "version": "cad8d2c1c3b0e8f7f2a3285f80fa0d7bc3a797ed231349f10ae63aa2cbe406d6",
-        "signature": "9b2b5d0d069049db073b17af21b0d3b051776fb3d94b82105e6162bfb66d8536",
+        "version": "f4e8ffae6822368d2c36346a535d2c476712db21b5a29d6c44c6d8f55c6ebf10",
+        "signature": "712b70ba37fbdd8cf990ef15b697e3b44c558ca070645d122cbb2723dc2e0d00",
         "affectsGlobalScope": false
       },
       "./src/util/socket.ts": {

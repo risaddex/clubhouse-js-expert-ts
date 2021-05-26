@@ -1,5 +1,14 @@
 import Attendee from './attendee.js'
 
+type TRoomConstructorProps = {
+  id: string
+  topic: string
+  attendeesCount: number
+  speakersCount: number
+  featuredAttendees: Attendee[]
+  owner: Attendee
+  users: Set<Attendee>
+}
 export default class Room {
   id: string
   topic: string
@@ -17,7 +26,7 @@ export default class Room {
     topic,
     users,
     featuredAttendees,
-  }: Room) {
+  }: TRoomConstructorProps) {
     this.attendeesCount = attendeesCount
     this.id = id
     this.owner = owner

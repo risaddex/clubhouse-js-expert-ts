@@ -47,8 +47,8 @@ Marque esse projeto com uma estrela 🌟
       - Se dono da sala
         - [ ] Pode aprovar attendees a virarem speakers
         - Ao se desconectar
-          - [ ] Promove o speaker mais velho da sala
-          - [ ] Se não houver speaker promove o attendee mais velho da sala
+          - [x] Promove o speaker mais velho da sala
+          - [x] Se não houver speaker promove o attendee mais velho da sala
     - Attendee
       - [ ] Pode ouvir speakers ativos
       - [ ] Pode pedir upgrade de perfil ao dono da sala

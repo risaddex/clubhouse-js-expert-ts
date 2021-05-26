@@ -1,11 +1,16 @@
 // Essa classe mapeia os eventos que ocorrem na sala
 import debug from 'debug'
 import { Socket } from 'socket.io'
-import { RoomData, socketEvents, TRoom, TUser } from '../../../global'
+import { socketEvents, TRoom, TUser } from '../../../global'
 import Attendee from '../entities/attendee.js'
 import Room from '../entities/room.js'
 const log = debug('server:roomsController')
 
+
+type RoomData = {
+  room: Room
+  user?: TUser
+}
 export default class RoomsController {
   #users?: Map<string, Attendee> = new Map()
   rooms?: Map<string, Room>
@@ -125,10 +130,10 @@ export default class RoomsController {
     socket.to(roomId).emit(event, user)
   }
   //@ts-expect-error
-  #joinUserRoom(socket: Socket, user: Attendee, room: TRoom) {
+  #joinUserRoom(socket: Socket, user: Attendee, room: Room) {
     const roomId = room.id
     const existingRoom = this.rooms.has(roomId)
-    const currentRoom = existingRoom ? this.rooms.get(roomId) : ({} as Room)
+    const currentRoom = existingRoom ? this.rooms.get(roomId) : {} as Room
     const currentUser = new Attendee({
       ...user,
       roomId,
