@@ -40,13 +40,15 @@ export default class RoomService {
   }
 
   upgradeUserPermission(user: Attendee) {
-    const { isSpeaker } = user
-    
-    if (!isSpeaker) return
+    if (!user.isSpeaker) {
+      return;
+    }
     //trata reconexões/dirty states
     const isCurrentUser = user.id === this.currentUser.id
 
-    if (!isCurrentUser) return
+    if (!isCurrentUser) {
+      return;
+    }
 
     this.currentUser = user
   }
@@ -77,15 +79,18 @@ export default class RoomService {
   }
 
   disconnectPeer({peerId}:{peerId:string}) {
-    if(!this.peers.has(peerId)) return;
+    if(!this.peers.has(peerId)) {
+      return;
+    }
 
     this.peers.get(peerId).call.close()
     this.peers.delete(peerId)
   }
-
+ 
   async callNewUser(user: Attendee) {
+    const {isSpeaker} = this.currentUser
     // se o usuário for speaker, ele vai me ligar
-    if (!user.isSpeaker) return
+    if (!isSpeaker) return;
 
     const stream = await this.getCurrentStream()
     this.currentPeer.call(user.peerId, stream)
