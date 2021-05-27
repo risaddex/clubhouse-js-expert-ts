@@ -1,4 +1,4 @@
-import Attendee from '../../entities/attendee.js'
+import Attendee from '../entities/attendee.js'
 
 const speakerIcon =
   '<img src="./../../assets/icons/asterisk.svg" alt="File icon" class="icon" />'

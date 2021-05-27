@@ -1,7 +1,11 @@
-export default class UserStream{
-  stream
+type UserStreamArgs = {
+  stream: MediaStream
   isFake: boolean
-  constructor({stream, isFake}) {
+}
+export default class UserStream {
+  stream: MediaStream
+  isFake: boolean
+  constructor({ stream, isFake }: UserStreamArgs) {
     this.stream = stream
     this.isFake = isFake
   }

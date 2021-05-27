@@ -1,5 +1,5 @@
-import { TUser } from '../../../../../../global.js'
-import Attendee from '../entities/attendee.js'
+import { TUser } from '../../../../../global'
+import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
 const userAvatar = document.getElementById('imgUser') as HTMLImageElement
@@ -69,11 +69,39 @@ export default class View {
       btnClap.classList.remove('hidden')
       btnMicrophone.classList.add('hidden')
       btnClipBoard.classList.add('hidden')
-      return;
+      return
     }
     //speaker
     btnClap.classList.add('hidden')
     btnMicrophone.classList.remove('hidden')
     btnClipBoard.classList.remove('hidden')
+  }
+
+  static _createAudioElement({
+    muted = true,
+    srcObject,
+  }: {
+    muted: boolean
+    srcObject: MediaProvider
+  }) {
+    const audio = document.createElement('audio')
+    audio.muted = muted
+    audio.srcObject = srcObject
+
+    audio.addEventListener('loadedmetadata', async () => {
+      try {
+        await audio.play()
+      } catch (error) {
+        console.error('error in the audio', error)
+      }
+    })
+  }
+
+  
+  static renderAudioElement({ stream, isCurrentId }) {
+    this._createAudioElement({
+      muted: isCurrentId,
+      srcObject: stream
+    })
   }
 }

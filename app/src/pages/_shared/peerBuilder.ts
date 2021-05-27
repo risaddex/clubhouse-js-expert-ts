@@ -1,24 +1,29 @@
+import Peer, { MediaConnection, PeerJSOption } from 'peerjs'
 import { ListenerCallback } from '../../../../global'
-import Peer, { PeerJSOption } from 'peerjs'
 
 type CustomPeerArgs = {
-  config: PeerJSOption
-  onCall():void
-  call(id: string, stream: MediaStream, options?: Peer.CallOption): Peer.MediaConnection;
-
+  config: {
+    id: string
+    options: PeerJSOption
+  }
+  onCall: (media: MediaConnection) => void
 }
-class CustomPeerModule extends globalThis.Peer {
-  constructor({config, onCall}:CustomPeerArgs) {
-    super(config)
+export class CustomPeerModule extends globalThis.Peer {
+  onCall: (media: MediaConnection) => void
 
+  constructor({ config, onCall }: CustomPeerArgs) {
+    super(config)
     this.onCall = onCall
   }
 
   call(...args) {
-    super.call()
+    const originalCallResult = super.call(...args) as MediaConnection
+
+    this.onCall(originalCallResult)
+
+    return originalCallResult
   }
 }
-
 export default class PeerBuilder {
   id: undefined | string
   peerConfig: PeerJSOption
@@ -29,8 +34,7 @@ export default class PeerBuilder {
   onCallReceived: ListenerCallback
   onStreamReceived: ListenerCallback
 
-  constructor(peerConfig: PeerJSOption, id = undefined) {
-    this.id = id
+  constructor(peerConfig: PeerJSOption) {
     this.peerConfig = peerConfig
     this.onError = () => {}
     this.onConnectionOpened = () => {}
@@ -70,19 +74,24 @@ export default class PeerBuilder {
     this.onStreamReceived = fn
     return this
   }
-  private prepareCallEvent(call:Peer.MediaConnection){
+  private prepareCallEvent(call: Peer.MediaConnection) {
     call.on('stream', (stream) => this.onStreamReceived(call, stream))
     call.on('error', (error) => this.onCallError(call, error))
-    call.on('closed', () => this.onCallClose(call))
+    call.on('close', () => this.onCallClose(call))
 
     this.onCallReceived(call)
   }
 
-  build(): Promise<Peer> {
-    const peer: Peer = new globalThis.Peer(this.peerConfig)
+  async build(): Promise<CustomPeerModule> {
+    const peer = new CustomPeerModule({
+      config: {
+        id: undefined,
+        options: {},
+      },
+      onCall: this.prepareCallEvent.bind(this),
+    })
     peer.on('error', this.onError)
     peer.on('call', this.prepareCallEvent.bind(this))
-    peer.call
 
     return new Promise((resolve) =>
       peer.on('open', () => {

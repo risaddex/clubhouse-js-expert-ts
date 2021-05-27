@@ -1,15 +1,15 @@
-import Peer from 'peerjs'
+import { MediaConnection } from 'peerjs'
 import { Socket } from 'socket.io-client'
 import {
   ListenerCallback,
   RoomData,
   socketEvents
-} from '../../../../../../global'
-import PeerBuilder from '../../../_shared/peerBuilder.js'
-import Attendee from '../entities/attendee.js'
+} from '../../../../../global'
+import PeerBuilder, { CustomPeerModule } from '../../_shared/peerBuilder.js'
+import Attendee from './entities/attendee.js'
 import RoomService from './room.service.js'
 import View from './room.view.js'
-import RoomSocketBuilder from './roomSocketBuilder.js'
+import RoomSocketBuilder from './util/roomSocketBuilder.js'
 
 
 export type InitializeDeps = {
@@ -22,7 +22,6 @@ export type InitializeDeps = {
 
 export default class RoomController {
   socket: Socket
-  peer: Peer
   roomInfo: RoomData
   peerBuilder: PeerBuilder
   roomService: RoomService
@@ -35,6 +34,7 @@ export default class RoomController {
     this.peerBuilder = peerBuilder
     this.roomService = roomService
     this.view = view
+    this.socket = {} as Socket
   }
 
   static async initialize(deps: InitializeDeps) {
@@ -64,22 +64,62 @@ export default class RoomController {
   }
 
   private async setupWebRTC() {
-    return this.peerBuilder
+    return this.peerBuilder 
       .setOnError(this.onPeerError())
       .setOnConnectionOpened(this.onPeerConnectionOpened())
+      .setOnCallReceived(this.onCallReceived())
+      .setOnCallError(this.onCallError())
+      .setOnCallClose(this.onCallClose())
+      .setOnStreamReceived(this.onStreamReceived())
       .build()
   }
 
+  private onStreamReceived(): ListenerCallback {
+    return (call:MediaConnection, stream:MediaStream) => { 
+      console.log('onStreamReceived', call, stream)
+      const {isCurrentId} = this.roomService.addReceivedPeer(call)
+
+      this.view.renderAudioElement({
+        stream,
+        isCurrentId
+      })
+    }
+  }
+
+  private onCallClose(): ListenerCallback {
+    return (call:MediaConnection) => {
+      console.log('onCallClose', call)
+      const peerId = call.peer
+      this.roomService.disconnectPeer({peerId})
+     }
+  }
+
+  private onCallError(): ListenerCallback {
+    return (call:MediaConnection, error) => {
+      console.log('onCallError', call, error)
+      const peerId = call.peer
+      this.roomService.disconnectPeer({peerId})
+     }
+  }
+
+  private onCallReceived(): ListenerCallback {
+    return async  (call: MediaConnection) => {
+      const stream = await this.roomService.getCurrentStream()
+      console.log('answering call', call)
+      call.answer(stream)
+     }
+  }
+
   private onPeerError(): ListenerCallback {
-    return error => {
+    return (error) => {
       console.log('error:', error)
      }
   }
 
   // quando a conexão for aberta, ele pede para entrar na sala
   private onPeerConnectionOpened(): ListenerCallback {
-    return (peer:Peer) => { 
-      console.log('peeer:', peer)
+    return (peer:CustomPeerModule) => {
+      console.log('peer:', peer)
       this.roomInfo.user.peerId = peer.id
       this.socket.emit(socketEvents.JOIN_ROOM, this.roomInfo)
     }
@@ -102,29 +142,34 @@ export default class RoomController {
 
   private onRoomUpdated(): ListenerCallback {
     return (roomList: Attendee[]) => {
-      console.log('room list:', roomList)
-
       const users = roomList.map(user => new Attendee(user))
-      this.roomService.updateCurrentUserProfile(users)
+      console.log('room list:', users)
+
       this.view.updateAttendeesOnGrid(users)
+      this.roomService.updateCurrentUserProfile(users)
       this.activateUserFeatures()
     }
   }
 
   private onUserDisconnected(): ListenerCallback {
-    return (user: Attendee) => {
+    return (attendee: Attendee) => {
+      const user = new Attendee(attendee)
+
       console.log(`${user.username} disconnected`)
 
       this.view.removeItemFromGrid(user.id)
+      
+      this.roomService.disconnectPeer(user)
     }
   }
 
   private onUserConnected(): ListenerCallback {
-    return (user: Attendee) => {
+    return (attendee: Attendee) => {
+      const user = new Attendee(attendee)
       console.log('user connected!', user)
 
-
       this.view.addAttendeeOnGrid(user)
+      this.roomService.callNewUser(user)
     }
   }
 

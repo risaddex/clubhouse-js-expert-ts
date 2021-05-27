@@ -1,14 +1,23 @@
 import { BaseAttendee, BaseRoom } from '../../../global.js'
 import Attendee from './attendee.js'
 
+type RoomArgs = {
+  id: string
+  topic: string
+  attendeesCount: number
+  speakersCount: number
+  featuredAttendees?: Attendee[]
+  owner: Attendee
+  users: Set<Attendee>
+}
 export default class Room implements BaseRoom {
   id: string
   topic: string
   attendeesCount: number
   speakersCount: number
-  featuredAttendees?: BaseAttendee[]
-  owner: BaseAttendee
-  users: Set<BaseAttendee>
+  featuredAttendees?: Attendee[]
+  owner: Attendee
+  users: Set<Attendee>
 
   constructor({
     attendeesCount,
@@ -18,7 +27,7 @@ export default class Room implements BaseRoom {
     topic,
     users,
     featuredAttendees,
-  }:BaseRoom) {
+  }:RoomArgs) {
     this.attendeesCount = attendeesCount
     this.id = id
     this.owner = owner

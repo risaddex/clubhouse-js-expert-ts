@@ -1,5 +1,5 @@
 import { ListenerCallback, socketEvents } from '../../../../global'
-
+import { ManagerOptions, Socket } from 'socket.io-client'
 //Builder design pattern
 export default class SocketBuilder {
   onUserConnected: ListenerCallback
@@ -24,12 +24,11 @@ export default class SocketBuilder {
     return this
   } 
   build() {
-    const socketOptions: Partial<io.ManagerOptions> = {
+    const socketOptions: Partial<ManagerOptions> = {
       withCredentials: false,
       
     }
-    const socket = globalThis.io.connect(this.socketUrl, socketOptions)
-
+    const socket = globalThis.io.connect(this.socketUrl, socketOptions) as Socket
     socket.on('connect', () =>
       console.log(`Você está conectado na sala ${socket.id}.`)
     )
