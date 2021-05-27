@@ -6,9 +6,12 @@ const userAvatar = document.getElementById('imgUser') as HTMLImageElement
 const roomTopic = document.getElementById('pTopic')
 const gridAttendees = document.getElementById('gridAttendees')
 const gridSpeakers = document.getElementById('gridSpeakers')
+const btnClipBoard = document.getElementById('btnClipBoard')
+const btnMicrophone = document.getElementById('btnMicrophone')
+const btnClap = document.getElementById('btnClap')
 
 export default class View {
-  static updateUserImage({ img, username }:TUser) {
+  static updateUserImage({ img, username }: TUser) {
     userAvatar.src = img
     userAvatar.alt = username
   }
@@ -23,7 +26,7 @@ export default class View {
 
   static getExistingItemOnGrid({
     id,
-    baseElement = document
+    baseElement = document,
   }: {
     id: string
     baseElement?: Partial<Document | HTMLElement>
@@ -47,16 +50,30 @@ export default class View {
     if (removeFirst) {
       this.removeItemFromGrid(id)
       baseElement.innerHTML += htmlTemplate
-      return;
+      return
     }
 
     const existingItem = this.getExistingItemOnGrid({ id, baseElement })
 
     if (existingItem) {
       existingItem.innerHTML = htmlTemplate
-      return; 
+      return
     }
 
     baseElement.innerHTML += htmlTemplate
+  }
+
+  static showUserFeatures(isSpeaker: boolean) {
+    //attendee
+    if (!isSpeaker) {
+      btnClap.classList.remove('hidden')
+      btnMicrophone.classList.add('hidden')
+      btnClipBoard.classList.add('hidden')
+      return;
+    }
+    //speaker
+    btnClap.classList.add('hidden')
+    btnMicrophone.classList.remove('hidden')
+    btnClipBoard.classList.remove('hidden')
   }
 }

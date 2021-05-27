@@ -27,11 +27,6 @@ declare type EventMap = {
   eventEmitter: Function
 }
 
-declare type RoomData = {
-  room: TRoom
-  user?: TUser
-}
-
 declare type TRoom = {
   id: string
   topic: string
@@ -42,6 +37,12 @@ declare type TUser = {
   img: string
   username: string
 }
+
+declare type RoomData = {
+  room: BaseRoom
+  user?: BaseAttendee
+}
+
 
 declare type ListenerCallback = (...args: any[]) => void
 
@@ -66,11 +67,13 @@ declare abstract class BaseRoom {
 }
 
 declare abstract class BaseAttendee {
-  id: string
-  isSpeaker: boolean
-  roomId: string
+  id?: string
+  isSpeaker?: boolean
+  roomId?: string
   img: string
   username: string
   peerId?: string
 
 }
+
+

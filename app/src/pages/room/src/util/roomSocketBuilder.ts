@@ -26,7 +26,7 @@ export default class RoomSocketBuilder extends SocketBuilder {
 
   build() {
     const socket = super.build()
-
+    
     socket.on(socketEvents.LOBBY_UPDATED, this.onRoomUpdated)
     socket.on(socketEvents.UPGRADE_USER_PERMISSION, this.onUserProfileUpgrade)
     return socket

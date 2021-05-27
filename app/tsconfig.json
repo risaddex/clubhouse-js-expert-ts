@@ -7,7 +7,9 @@
     "moduleResolution": "node",
     "allowJs": true,
     "incremental": true,
+    "types": ["socket.io-client"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "files": ["src/types.d.ts"],
   
 }
