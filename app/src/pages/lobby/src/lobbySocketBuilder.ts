@@ -1,5 +1,5 @@
-import { ListenerCallback, SocketBuilderOptions, socketEvents } from '../../../../../../global'
-import SocketBuilder from '../../../_shared/socketBuilder.js'
+import { ListenerCallback, SocketBuilderOptions, socketEvents } from '../../../../../global'
+import SocketBuilder from '../../_shared/socketBuilder.js'
 
 export default class LobbySocketBuilder extends SocketBuilder {
   onLobbyUpdated: ListenerCallback

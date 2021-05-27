@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client'
-import { ListenerCallback, TUser } from '../../../../../../global'
-import Room from '../entities/room'
+import { ListenerCallback, TUser } from '../../../../../global'
+import Room from './entities/room'
 import View from './lobby.view.js'
 import LobbySocketBuilder from './lobbySocketBuilder'
 

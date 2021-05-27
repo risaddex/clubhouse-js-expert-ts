@@ -46,11 +46,25 @@ async function initializeWithRetry() {
   try {
     await RoomController.initialize(dependencies)
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    // for mobile users
+    const mobileDevicesUA = [
+      'iPhone',
+      'Android',
+      'Opera Mobi',
+      'Opera Mini',
+      'Windows Phone ',
+      'Mobile Safari',
+    ]
+    const isMobile = mobileDevicesUA.some((item) =>
+      navigator.userAgent.indexOf(item)
+    )
+
+    if (isMobile) {
+      alert(error)
+    }
     setTimeout(() => {
       initializeWithRetry()
-    }, 2000)
+    }, 3000)
   }
 }
-
-initializeWithRetry()

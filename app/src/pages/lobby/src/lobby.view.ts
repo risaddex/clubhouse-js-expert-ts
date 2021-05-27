@@ -1,12 +1,12 @@
-import { TUser } from "../../../../../../global.js";
-import Room from "../entities/room.js";
-import getLobbyTemplate from '../templates/lobbyItem.js'
+import { TUser } from "../../../../../global.js";
+import Room from "./entities/room.js";
+import getLobbyTemplate from './templates/lobbyItem.js';
 
 const roomGrid = document.getElementById('roomGrid')
 const btnCreateRoomWithoutTopic = document.getElementById('btnCreateRoomWithoutTopic')
 const btnCreateRoomWithTopic = document.getElementById('btnCreateRoomWithTopic')
 const txtTopic = document.getElementById('txtTopic') as HTMLInputElement
-// const userAvatar = document.getElementById('') as HTMLImageElement
+const imgUser = document.getElementById('imgUser') as HTMLImageElement
 
 export default class View {
 
@@ -39,10 +39,10 @@ export default class View {
     })
   }
 
-  // static updateUserImage({ img, username }:TUser) {
-  //   userAvatar.src = img
-  //   userAvatar.alt = username
-  // }
+  static updateUserImage({ img, username }:TUser) {
+    imgUser.src = img
+    imgUser.alt = username
+  }
 
   static updateRoomList(rooms:Room[]){
     this.clearRoomList()
