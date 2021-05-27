@@ -38,10 +38,10 @@ export default class RoomController {
   }
 
   static async initialize(deps: InitializeDeps) {
-    return new RoomController(deps).initialize()
+    return new RoomController(deps)._initialize()
   }
 
-  private async initialize() {
+  private async _initialize() {
     this.setupViewEvents()
     this.roomService.initialize()
     
@@ -112,7 +112,7 @@ export default class RoomController {
 
   private onPeerError(): ListenerCallback {
     return (error) => {
-      console.log('error:', error)
+      console.error('error:', error)
      }
   }
 

@@ -1,7 +1,7 @@
 import Event from 'events'
 
 declare const enum constants {
-  SOCKET_URL = 'http://localhost:3000',
+  SOCKET_URL = 'localhost:3000',
 }
 
 declare const enum socketEvents {
