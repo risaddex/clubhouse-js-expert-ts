@@ -40,7 +40,7 @@ const dependencies = {
   roomInfo,
 }
 // Será suportado no firefox 89
-// await RoomController.initialize(dependencies)
+// RoomController.initialize(dependencies).catch(e => alert(e.message))
 
 async function initializeWithRetry() {
   try {
@@ -68,3 +68,5 @@ async function initializeWithRetry() {
     }, 3000)
   }
 }
+
+initializeWithRetry()

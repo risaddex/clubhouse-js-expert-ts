@@ -1,8 +1,9 @@
-import { TUser } from '../../../../../global'
+import { ListenerCallback, TUser } from '../../../../../global'
 import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
 const userAvatar = document.getElementById('imgUser') as HTMLImageElement
+const toggleImage = document.getElementById('toggleImage') as HTMLImageElement
 const roomTopic = document.getElementById('pTopic')
 const gridAttendees = document.getElementById('gridAttendees')
 const gridSpeakers = document.getElementById('gridSpeakers')
@@ -77,7 +78,7 @@ export default class View {
     btnClipBoard.classList.remove('hidden')
   }
 
-  static _createAudioElement({
+ static createAudioElement({
     muted = true,
     srcObject,
   }: {
@@ -97,11 +98,31 @@ export default class View {
     })
   }
 
-  
   static renderAudioElement({ stream, isCurrentId }) {
-    this._createAudioElement({
+    this.createAudioElement({
       muted: isCurrentId,
       srcObject: stream
     })
+  }
+
+  static onClapClick(command:ListenerCallback) {
+    return () => {
+      command()
+      const basePath = './../../assets/icons/'
+      const handActive = 'hand-solid.svg'
+      const handInactive = 'hand.svg'
+
+      if(toggleImage.src.match(handInactive)) {
+        toggleImage.src = `${basePath}${handActive}`
+        return
+      }
+      
+      toggleImage.src = `${basePath}${handInactive}`
+
+    }
+  }
+
+ static configureClapButton(command:ListenerCallback) {
+    btnClap.addEventListener('click', this.onClapClick(command) )
   }
 }

@@ -9,7 +9,6 @@ import Room from '../entities/room.js'
 import CustomMap from '../util/customMap.js'
 const log = debug('server:roomsController')
 
-
 type RoomData = {
   room: Room
   user?: TUser
@@ -23,22 +22,64 @@ export default class RoomsController implements BaseController {
   rooms?: Map<string, Room>
   roomsPubSub: Event
 
-  constructor({roomsPubSub}:RoomsControllerArgs) {
+  constructor({ roomsPubSub }: RoomsControllerArgs) {
     this.roomsPubSub = roomsPubSub
     this.rooms = new CustomMap({
       observer: this.#roomObserver(),
-      customMapper: this.#mapRoom.bind(this)
-      
+      customMapper: this.#mapRoom.bind(this),
     })
   }
   // @ts-expect-error
-  #roomObserver(){
+  #roomObserver() {
     return {
-      notify: (rooms:Room[]) => this.notifyRoomSubscribers(rooms)
+      notify: (rooms: Room[]) => this.notifyRoomSubscribers(rooms),
     }
   }
 
-  notifyRoomSubscribers(rooms:Room[]) {
+  speakAnswer(
+    socket: Socket,
+    {
+      answer,
+      user,
+    }: {
+      answer: boolean
+      user: Attendee
+    }
+  ) {
+    const currentUser = this.#users.get(user.id)
+    const updatedUser = new Attendee({
+      ...currentUser,
+      isSpeaker: answer,
+    })
+
+    this.#users.set(user.id, updatedUser)
+
+    const roomId = user.roomId
+    const room = this.rooms.get(roomId)
+    const userOnRoom = [...room.users.values()].find(({ id }) => id === user.id)
+
+    room.users.delete(userOnRoom)
+    room.users.add(updatedUser)
+    // as we used the observer pattern on the custom Map, it will
+    // automatically emit a event :)
+    this.rooms.set(roomId, room)
+    
+    socket.emit(socketEvents.UPGRADE_USER_PERMISSION, updatedUser)
+    // notify the whole room when the speaker permissions change
+    this.#notifyUserProfileUpgrade(socket, roomId, updatedUser)
+  }
+
+  //envia um request par ao dono da sala
+  speakRequest(socket: Socket) {
+    const userId = socket.id
+    const user = this.#users.get(userId)
+    const roomId = user.roomId
+    const owner = this.rooms.get(roomId)?.owner
+
+    socket.to(owner.id).emit(socketEvents.SPEAK_REQUEST, user)
+  }
+
+  notifyRoomSubscribers(rooms: Room[]) {
     const event = socketEvents.LOBBY_UPDATED
     this.roomsPubSub.emit(event, [...rooms.values()])
   }
@@ -54,8 +95,8 @@ export default class RoomsController implements BaseController {
     this.#logoutUser(socket)
   }
 
-  /** 
-   * @see [Regra de Negócio](https://github.com/risaddex/clubhouse-js-expert-ts/blob/main/README.md#L41) 
+  /**
+   * @see [Regra de Negócio](https://github.com/risaddex/clubhouse-js-expert-ts/blob/main/README.md#L41)
    * Disconnect a user from the room
    **/
 
@@ -77,10 +118,9 @@ export default class RoomsController implements BaseController {
     // remove usuário da sala
     room.users?.delete(toBeRemoved)
 
-    
     if (!room?.users.size) {
       this.rooms.delete(roomId)
-      return;
+      return
     }
 
     const disconnectedUserWasAOwner = userId === room.owner.id
@@ -98,20 +138,20 @@ export default class RoomsController implements BaseController {
     socket.to(roomId).emit(socketEvents.USER_DISCONNECTED, user)
   }
   /**
-   * 
-   * @see [Regra de Negócio](https://github.com/risaddex/clubhouse-js-expert-ts/blob/main/README.md#L47) 
+   *
+   * @see [Regra de Negócio](https://github.com/risaddex/clubhouse-js-expert-ts/blob/main/README.md#L47)
    * transfer room ownership when a user left
    */
 
   //@ts-expect-error
-  #notifyUserProfileUpgrade(socket:Socket, roomId:string, user:Attendee) {
+  #notifyUserProfileUpgrade(socket: Socket, roomId: string, user: Attendee) {
     socket.to(roomId).emit(socketEvents.UPGRADE_USER_PERMISSION, user)
   }
   //@ts-expect-error
-  #getNewRoomOwner(room:Room, socket:Socket) {
+  #getNewRoomOwner(room: Room, socket: Socket) {
     const users = [...room.users.values()]
-    const activeSpeakers = users.find(user => user.isSpeaker)
-    
+    const activeSpeakers = users.find((user) => user.isSpeaker)
+
     // destruct para pegar o usuário mais antigo (1ra posição do array)
     const [newOwner] = activeSpeakers ? [activeSpeakers] : users
     newOwner.isSpeaker = true
@@ -119,7 +159,7 @@ export default class RoomsController implements BaseController {
     const outdatedUser = this.#users?.get(newOwner.id)
     const updatedUser = new Attendee({
       ...outdatedUser,
-      ...newOwner
+      ...newOwner,
     })
 
     this.#users?.set(newOwner.id, updatedUser)
@@ -157,7 +197,7 @@ export default class RoomsController implements BaseController {
   #joinUserRoom(socket: Socket, user: Attendee, room: Room) {
     const roomId = room.id
     const existingRoom = this.rooms.has(roomId)
-    const currentRoom = existingRoom ? this.rooms.get(roomId) : {} as Room
+    const currentRoom = existingRoom ? this.rooms.get(roomId) : ({} as Room)
     const currentUser = new Attendee({
       ...user,
       roomId,
@@ -199,7 +239,7 @@ export default class RoomsController implements BaseController {
 
   //@ts-expect-error
   #updateGlobalUserData(userId: string, userData?: TUser, roomId?: string) {
-    const user = this.#users.get(userId) ?? {} as Attendee
+    const user = this.#users.get(userId) ?? ({} as Attendee)
     const existingRoom = this.rooms.has(roomId)
 
     const updatedUserData = new Attendee({
@@ -214,15 +254,14 @@ export default class RoomsController implements BaseController {
     return this.#users.get(userId)
   }
 
-  getEvents():Map<string, Function> {
+  getEvents(): Map<string, Function> {
     //navegar entre a estrutura para pegar as funções publicas
 
     //captura o nome das funções publicas
     const functions = Reflect.ownKeys(RoomsController.prototype)
-      .filter((fn:string) => fn !== 'constructor')
-      .map((name:string) => [name, this[name].bind(this)])
+      .filter((fn: string) => fn !== 'constructor')
+      .map((name: string) => [name, this[name].bind(this)])
 
     return new Map(functions as any)
-
   }
 }

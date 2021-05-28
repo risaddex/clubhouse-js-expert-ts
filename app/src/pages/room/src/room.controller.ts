@@ -50,8 +50,15 @@ export default class RoomController {
   }
 
   private setupViewEvents() {
+    this.view.configureClapButton(this.onClapPressed())
     this.view.updateUserImage(this.roomInfo.user)
     this.view.updateRoomTopic(this.roomInfo.room.topic)
+  }
+
+  private onClapPressed(): ListenerCallback {
+    return () => {
+      this.socket.emit(socketEvents.SPEAK_REQUEST, this.roomInfo.user)
+    }
   }
 
   private setupSocket() {
@@ -60,7 +67,16 @@ export default class RoomController {
       .setOnUserDisconnected(this.onUserDisconnected())
       .setOnRoomUpdated(this.onRoomUpdated())
       .setOnUserProfileUpgrade(this.onUserProfileUpgrade())
+      .setOnSpeakRequested(this.onSpeakRequested())
       .build()
+  }
+
+  private onSpeakRequested(): ListenerCallback {
+    return (data:Attendee) => { 
+      const user = new Attendee(data)
+      const result = prompt(`${user.username} pediu para falar! 1 sim, 0 não`)
+      this.socket.emit(socketEvents.SPEAK_ANSWER, {answer: !!result, user})
+    }
   }
 
   private async setupWebRTC() {
@@ -77,11 +93,12 @@ export default class RoomController {
   private onStreamReceived(): ListenerCallback {
     return (call:MediaConnection, stream:MediaStream) => { 
       console.log('onStreamReceived', call, stream)
+      console.warn('áudio desabilitado (linha 86)')
       const {isCurrentId} = this.roomService.addReceivedPeer(call)
 
       this.view.renderAudioElement({
         stream,
-        isCurrentId
+        isCurrentId:true
       })
     }
   }
