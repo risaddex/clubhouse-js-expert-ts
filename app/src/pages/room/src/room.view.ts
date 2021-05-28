@@ -1,7 +1,10 @@
-import { ListenerCallback, TUser } from '../../../../../global'
+import { BaseAttendee, ListenerCallback, pages, TUser } from '../../../../../global'
 import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
+const basePath = './../../assets/icons/'
+const handActive = 'hand-solid.svg'
+const handInactive = 'hand.svg'
 const userAvatar = document.getElementById('imgUser') as HTMLImageElement
 const toggleImage = document.getElementById('toggleImage') as HTMLImageElement
 const roomTopic = document.getElementById('pTopic')
@@ -10,9 +13,10 @@ const gridSpeakers = document.getElementById('gridSpeakers')
 const btnClipBoard = document.getElementById('btnClipBoard')
 const btnMicrophone = document.getElementById('btnMicrophone')
 const btnClap = document.getElementById('btnClap')
+const btnLeave = document.getElementById('btnLeave')
 
 export default class View {
-  static updateUserImage({ img, username }: TUser) {
+  static updateUserImage({ img, username }: BaseAttendee) {
     userAvatar.src = img
     userAvatar.alt = username
   }
@@ -22,10 +26,10 @@ export default class View {
   }
 
   static updateAttendeesOnGrid(users: Attendee[]) {
-    users?.forEach((attendee) => this.addAttendeeOnGrid(attendee))
+    users?.forEach((attendee) => this._addAttendeeOnGrid(attendee))
   }
 
-  static getExistingItemOnGrid({
+  static _getExistingItemOnGrid({
     id,
     baseElement = document,
   }: {
@@ -38,11 +42,11 @@ export default class View {
   }
 
   static removeItemFromGrid(id: string) {
-    const existingElement = this.getExistingItemOnGrid({ id })
+    const existingElement = this._getExistingItemOnGrid({ id })
     existingElement?.remove()
   }
 
-  static addAttendeeOnGrid(attendee: Attendee, removeFirst = false) {
+  static _addAttendeeOnGrid(attendee: Attendee, removeFirst = false) {
     const user = new Attendee(attendee)
     const htmlTemplate = getTemplate(user)
     const id = user.id
@@ -54,7 +58,7 @@ export default class View {
       return
     }
 
-    const existingItem = this.getExistingItemOnGrid({ id, baseElement })
+    const existingItem = this._getExistingItemOnGrid({ id, baseElement })
 
     if (existingItem) {
       existingItem.innerHTML = htmlTemplate
@@ -70,6 +74,7 @@ export default class View {
       btnClap.classList.remove('hidden')
       btnMicrophone.classList.add('hidden')
       btnClipBoard.classList.add('hidden')
+      toggleImage.src = `${basePath}/${handInactive}`
       return
     }
     //speaker
@@ -98,7 +103,10 @@ export default class View {
     })
   }
 
-  static renderAudioElement({ stream, isCurrentId }) {
+  static renderAudioElement({ stream, isCurrentId }:{
+    stream:MediaProvider;
+    isCurrentId: boolean
+  }) {
     this.createAudioElement({
       muted: isCurrentId,
       srcObject: stream
@@ -108,9 +116,6 @@ export default class View {
   static onClapClick(command:ListenerCallback) {
     return () => {
       command()
-      const basePath = './../../assets/icons/'
-      const handActive = 'hand-solid.svg'
-      const handInactive = 'hand.svg'
 
       if(toggleImage.src.match(handInactive)) {
         toggleImage.src = `${basePath}${handActive}`
@@ -124,5 +129,41 @@ export default class View {
 
  static configureClapButton(command:ListenerCallback) {
     btnClap.addEventListener('click', this.onClapClick(command) )
+  }
+
+  static _redirectToLobby() {
+    window.location.href = pages.lobby
+  }
+
+
+  static _toggleMicrophoneIcon() {
+    const icon = btnMicrophone.firstElementChild
+    const classes = [...icon.classList]
+
+    const inactiveMicClass = 'fa-microphone-slash'
+    const activeMicClass = 'fa-microphone'
+
+    const isInactiveMic = classes.includes(inactiveMicClass)
+    if(isInactiveMic) {
+      icon.classList.remove(inactiveMicClass)
+      icon.classList.add(activeMicClass)
+      return;
+    }
+
+    icon.classList.remove(activeMicClass)
+    icon.classList.add(inactiveMicClass)
+  }
+
+ static configureLeaveButton() {
+    btnLeave.addEventListener('click',() => {
+      this._redirectToLobby()
+    } )
+  }
+  
+ static configureOnMicrophoneActivatedButton(command:ListenerCallback) {
+    btnMicrophone.addEventListener('click',() => {
+      this._toggleMicrophoneIcon()
+      command()
+    } )
   }
 }

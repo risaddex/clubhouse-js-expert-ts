@@ -2,7 +2,7 @@ export default class Media {
   static async getUserAudio(audio = true) {
     return await navigator.mediaDevices.getUserMedia({
       audio
-    })
+    })  
   }
   //se o usuário não tem permissão, mandará uma stream fake de audio
   //workaround

@@ -50,9 +50,17 @@ export default class RoomController {
   }
 
   private setupViewEvents() {
+    this.view.configureOnMicrophoneActivatedButton(this.onMicrophoneActivatedButton())
+    this.view.configureLeaveButton()
     this.view.configureClapButton(this.onClapPressed())
     this.view.updateUserImage(this.roomInfo.user)
     this.view.updateRoomTopic(this.roomInfo.room.topic)
+  }
+
+  private onMicrophoneActivatedButton(): ListenerCallback {
+    return async () => {
+      await this.roomService.toggleAudioActivation()
+     }
   }
 
   private onClapPressed(): ListenerCallback {
@@ -75,7 +83,7 @@ export default class RoomController {
     return (data:Attendee) => { 
       const user = new Attendee(data)
       const result = prompt(`${user.username} pediu para falar! 1 sim, 0 não`)
-      this.socket.emit(socketEvents.SPEAK_ANSWER, {answer: !!result, user})
+      this.socket.emit(socketEvents.SPEAK_ANSWER, {answer: !!Number(result), user})
     }
   }
 
@@ -93,12 +101,12 @@ export default class RoomController {
   private onStreamReceived(): ListenerCallback {
     return (call:MediaConnection, stream:MediaStream) => { 
       console.log('onStreamReceived', call, stream)
-      console.warn('áudio desabilitado (linha 86)')
+      // console.warn('áudio desabilitado (linha 86)')
       const {isCurrentId} = this.roomService.addReceivedPeer(call)
 
       this.view.renderAudioElement({
         stream,
-        isCurrentId:true
+        isCurrentId
       })
     }
   }
@@ -146,11 +154,11 @@ export default class RoomController {
     return (attendee: Attendee) => {
       const user = new Attendee(attendee)
 
-      this.roomService.upgradeUserPermission(user)
       console.log('onUserProfileUpgrade', user)
-
+      
       if (user.isSpeaker) {
-        this.view.addAttendeeOnGrid(user, true)
+        this.roomService.upgradeUserPermission(user)
+        this.view._addAttendeeOnGrid(user, true)
       }
 
       this.activateUserFeatures()
@@ -185,7 +193,7 @@ export default class RoomController {
       const user = new Attendee(attendee)
       console.log('user connected!', user)
 
-      this.view.addAttendeeOnGrid(user)
+      this.view._addAttendeeOnGrid(user)
       this.roomService.callNewUser(user)
     }
   }

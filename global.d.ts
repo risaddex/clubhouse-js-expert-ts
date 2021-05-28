@@ -15,6 +15,12 @@ declare const enum socketEvents {
   SPEAK_ANSWER = 'speakAnswer'
 }
 
+declare const enum pages {
+  lobby = '/pages/lobby',
+  login = '/pages/login',
+
+}
+
 declare const enum socketNamespaces {
   room = 'room',
   lobby = 'lobby',
