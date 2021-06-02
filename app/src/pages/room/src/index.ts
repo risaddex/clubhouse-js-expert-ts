@@ -37,7 +37,11 @@ const roomService = new RoomService({
   media: Media
 })
 
-const peerBuilder = new PeerBuilder({})
+const peerBuilder = new PeerBuilder({
+  port: 9000,
+  host: 'localhost',
+  path: '/'
+})
 
 const roomInfo: RoomData = { user, room }
 
