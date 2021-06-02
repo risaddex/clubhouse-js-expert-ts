@@ -75,9 +75,9 @@ declare type RoomData = {
 
 declare type ListenerCallback = (...args: any[]) => void
 
-declare interface RouteConfig {
+declare type RouteConfig= {
   room?: {
-    events: Map<string, () => void>
+    events: Map<string, ListenerCallback>
     eventEmitter: Event
   }
 }

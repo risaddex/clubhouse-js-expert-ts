@@ -6,9 +6,9 @@
     "target": "ESNext",
     "moduleResolution": "node",
     "allowJs": true,
-    "incremental": true,
+    "incremental": false,
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
   },
   "include": ["src/**/*.ts"]
   

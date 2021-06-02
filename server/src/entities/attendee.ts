@@ -1,4 +1,4 @@
-import { IAttendee } from "../../../global"
+import { IAttendee } from "../types"
 
 export default class Attendee implements IAttendee {
     id: string

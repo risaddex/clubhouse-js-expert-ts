@@ -2,7 +2,7 @@
 import debug from 'debug'
 import Event from 'events'
 import { Socket } from 'socket.io'
-import { socketEvents, TUser } from '../../../global'
+import { IAttendee, socketEvents, TUser } from '../types'
 import { BaseController } from '../types'
 import Attendee from '../entities/attendee.js'
 import Room from '../entities/room.js'
@@ -11,15 +11,15 @@ const log = debug('server:roomsController')
 
 type RoomData = {
   room: Room
-  user?: TUser
+  user: Attendee
 }
 
 type RoomsControllerArgs = {
   roomsPubSub: Event
 }
 export default class RoomsController implements BaseController {
-  #users?: Map<string, Attendee> = new Map()
-  rooms?: Map<string, Room>
+  #users: Map<string, Attendee> = new Map()
+  rooms: Map<string, Room>
   roomsPubSub: Event
 
   constructor({ roomsPubSub }: RoomsControllerArgs) {
@@ -46,7 +46,7 @@ export default class RoomsController implements BaseController {
       user: Attendee
     }
   ) {
-    const currentUser = this.#users.get(user.id)
+    const currentUser = this.#users.get(user.id) as Attendee
     const updatedUser = new Attendee({
       ...currentUser,
       isSpeaker: answer,
@@ -55,8 +55,8 @@ export default class RoomsController implements BaseController {
     this.#users.set(user.id, updatedUser)
 
     const roomId = user.roomId
-    const room = this.rooms.get(roomId)
-    const userOnRoom = [...room.users.values()].find(({ id }) => id === user.id)
+    const room = this.rooms.get(roomId) as Room
+    const userOnRoom = [...room.users.values()].find(({ id }) => id === user.id) as Attendee
 
     room.users.delete(userOnRoom)
     room.users.add(updatedUser)
@@ -72,9 +72,9 @@ export default class RoomsController implements BaseController {
   //envia um request par ao dono da sala
   speakRequest(socket: Socket) {
     const userId = socket.id
-    const user = this.#users.get(userId)
+    const user = this.#users.get(userId) as Attendee
     const roomId = user.roomId
-    const owner = this.rooms.get(roomId)?.owner
+    const owner = this.rooms.get(roomId)?.owner  as Attendee
 
     socket.to(owner.id).emit(socketEvents.SPEAK_REQUEST, user)
   }
@@ -103,8 +103,8 @@ export default class RoomsController implements BaseController {
   // @ts-expect-error
   #logoutUser(socket: Socket) {
     const userId = socket.id
-    const user = this.#users?.get(userId)
-    const roomId = user?.roomId
+    const user = this.#users?.get(userId) as IAttendee
+    const roomId = user?.roomId as string
     // remover usuário da lista de usuários ativos
     this.#users?.delete(userId)
 
@@ -113,8 +113,8 @@ export default class RoomsController implements BaseController {
       return
     }
 
-    const room = this.rooms?.get(roomId)
-    const toBeRemoved = [...room?.users]?.find(({ id }) => id === userId)
+    const room = this.rooms?.get(roomId) as Room
+    const toBeRemoved = [...room.users]?.find(({ id }) => id === userId) as Attendee
     // remove usuário da sala
     room.users?.delete(toBeRemoved)
 
@@ -173,11 +173,11 @@ export default class RoomsController implements BaseController {
     const userId = (user.id = socket.id)
     const roomId = room.id
 
-    const updatedUserData = this.#updateGlobalUserData(userId, user, roomId)
+    const updatedUserData = this.#updateGlobalUserData(userId, user, roomId) as Attendee
 
     log({ updatedUserData })
 
-    const updatedRoom = this.#joinUserRoom(socket, updatedUserData, room)
+    const updatedRoom = <Room>this.#joinUserRoom(socket, updatedUserData, room)
 
     this.#notifyUsersOnRoom(socket, roomId, updatedUserData)
     this.#replyWithActiveUsers(socket, updatedRoom.users)
@@ -197,7 +197,7 @@ export default class RoomsController implements BaseController {
   #joinUserRoom(socket: Socket, user: Attendee, room: Room) {
     const roomId = room.id
     const existingRoom = this.rooms.has(roomId)
-    const currentRoom = existingRoom ? this.rooms.get(roomId) : ({} as Room)
+    const currentRoom = existingRoom ? this.rooms.get(roomId) as Room : ({} as Room) 
     const currentUser = new Attendee({
       ...user,
       roomId,
@@ -238,7 +238,7 @@ export default class RoomsController implements BaseController {
   }
 
   //@ts-expect-error
-  #updateGlobalUserData(userId: string, userData?: TUser, roomId?: string) {
+  #updateGlobalUserData(userId: string, userData?: TUser, roomId: string) {
     const user = this.#users.get(userId) ?? ({} as Attendee)
     const existingRoom = this.rooms.has(roomId)
 
@@ -259,8 +259,8 @@ export default class RoomsController implements BaseController {
 
     //captura o nome das funções publicas
     const functions = Reflect.ownKeys(RoomsController.prototype)
-      .filter((fn: string) => fn !== 'constructor')
-      .map((name: string) => [name, this[name].bind(this)])
+    .filter((fn: string|Symbol ) => fn !== 'constructor')
+      .map((name) => [name, this[name].bind(this)])
 
     return new Map(functions as any)
   }

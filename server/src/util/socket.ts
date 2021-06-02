@@ -1,7 +1,7 @@
 import debug from 'debug'
 import http from 'http'
 import { Server } from 'socket.io'
-import { RouteConfig, socketEvents, socketNamespaces } from '../../../global'
+import { RouteConfig, socketEvents, socketNamespaces } from '../types'
 
 const log = debug('server:socket')
 
@@ -25,9 +25,13 @@ export default class SocketServer {
   // // ]
   attachEvents({ routeConfig }: { routeConfig: RouteConfig[] }) {
     for (const routes of routeConfig) {
+      log(routes)
+      log(routeConfig)
+      log(Object.entries(routes))
       for (const [namespace, { events, eventEmitter }] of Object.entries(
         routes
-      )) {
+        )) {
+        
         const route = (this.namespaces[namespace] = this.#io.of(
           `/${namespace}`
         ))
@@ -43,7 +47,7 @@ export default class SocketServer {
   }
 
   async start(): Promise<http.Server> {
-    const server = http.createServer((req, res) => {
+    const server = http.createServer((_req, res) => {
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
