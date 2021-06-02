@@ -4,6 +4,10 @@
     "debug": "^4.3.1",
     "socket.io": "^4.0.1"
   },
+
+  "engines": {
+    "node": "14.15.4"
+  },
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
