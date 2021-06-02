@@ -1,4 +1,4 @@
-import { IAttendee } from "../../../../../global.js";
+import { IAttendee, pages } from "../../../../../global.js";
 import Room from "./entities/room.js";
 import getLobbyTemplate from './templates/lobbyItem.js';
 
@@ -17,6 +17,7 @@ export default class View {
   static generateRoomLink ({id, topic}:Partial<Room>){
     return `./../room/index.html?id=${id}&topic=${topic}`
   }
+
 
   static redirectToRoom(topic = '') {
     // it generates a unique id with "99.9%" of safety

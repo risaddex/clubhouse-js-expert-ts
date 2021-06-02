@@ -1,10 +1,21 @@
-import { constants, socketNamespaces } from '../../../../../global.js'
+import { constants, IAttendee, socketNamespaces } from '../../../../../global.js'
 import checkDevice from '../../_shared/checkDevice.js'
+import UserDb from '../../_shared/userDb.js'
+import Utils from '../../_shared/utils.js'
 import LobbyController from './lobby.controller.js'
 import View from './lobby.view.js'
 import LobbySocketBuilder from './lobbySocketBuilder.js'
 
-// const user = a
+
+let user:IAttendee
+
+try {
+  user = UserDb.checkIfUserExists();
+} catch (error) {
+  console.warn(`${error.message}, redirecting to login.`)
+  Utils.redirectToLogin();
+  
+}
 
 const socketBuilder = new LobbySocketBuilder({
   socketUrl: constants.SOCKET_URL,

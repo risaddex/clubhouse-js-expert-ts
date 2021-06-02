@@ -1,4 +1,5 @@
 import { IAttendee, ListenerCallback, pages, TUser } from '../../../../../global'
+import Utils from '../../_shared/utils.js'
 import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
@@ -41,33 +42,34 @@ export default class View {
     return existingItem
   }
 
+  
   static removeItemFromGrid(id: string) {
     const existingElement = this._getExistingItemOnGrid({ id })
     existingElement?.remove()
   }
-
+  
   static _addAttendeeOnGrid(attendee: Attendee, removeFirst = false) {
     const user = new Attendee(attendee)
     const htmlTemplate = getTemplate(user)
     const id = user.id
     const baseElement = user.isSpeaker ? gridSpeakers : gridAttendees
-
+    
     if (removeFirst) {
       this.removeItemFromGrid(id)
       baseElement.innerHTML += htmlTemplate
       return
     }
-
+    
     const existingItem = this._getExistingItemOnGrid({ id, baseElement })
-
+    
     if (existingItem) {
       existingItem.innerHTML = htmlTemplate
       return
     }
-
+    
     baseElement.innerHTML += htmlTemplate
   }
-
+  
   static showUserFeatures(isSpeaker: boolean) {
     //attendee
     if (!isSpeaker) {
@@ -82,8 +84,8 @@ export default class View {
     btnMicrophone.classList.remove('hidden')
     btnClipBoard.classList.remove('hidden')
   }
-
- static createAudioElement({
+  
+  static createAudioElement({
     muted = true,
     srcObject,
   }: {
@@ -93,7 +95,7 @@ export default class View {
     const audio = document.createElement('audio')
     audio.muted = muted
     audio.srcObject = srcObject
-
+    
     audio.addEventListener('loadedmetadata', async () => {
       try {
         await audio.play()
@@ -102,7 +104,7 @@ export default class View {
       }
     })
   }
-
+  
   static renderAudioElement({ stream, isCurrentId }:{
     stream:MediaProvider;
     isCurrentId: boolean
@@ -112,37 +114,34 @@ export default class View {
       srcObject: stream
     })
   }
-
+  
   static onClapClick(command:ListenerCallback) {
     return () => {
       command()
-
+      
       if(toggleImage.src.match(handInactive)) {
         toggleImage.src = `${basePath}${handActive}`
         return
       }
       
       toggleImage.src = `${basePath}${handInactive}`
-
+      
     }
   }
-
- static configureClapButton(command:ListenerCallback) {
+  
+  static configureClapButton(command:ListenerCallback) {
     btnClap.addEventListener('click', this.onClapClick(command) )
   }
-
-  static _redirectToLobby() {
-    window.location.href = pages.lobby
-  }
-
-
+  
+  
+  
   static _toggleMicrophoneIcon() {
     const icon = btnMicrophone.firstElementChild
     const classes = [...icon.classList]
-
+    
     const inactiveMicClass = 'fa-microphone-slash'
     const activeMicClass = 'fa-microphone'
-
+    
     const isInactiveMic = classes.includes(inactiveMicClass)
     if(isInactiveMic) {
       icon.classList.remove(inactiveMicClass)
@@ -156,7 +155,7 @@ export default class View {
 
  static configureLeaveButton() {
     btnLeave.addEventListener('click',() => {
-      this._redirectToLobby()
+      Utils.redirectToLobby();
     } )
   }
   
