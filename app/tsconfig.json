@@ -9,6 +9,4 @@
     "incremental": true,
   },
   "include": ["src/**/*.ts"],
-  
-  
 }

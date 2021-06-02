@@ -1,4 +1,4 @@
-import { TUser } from "../../../../../global.js";
+import { IAttendee } from "../../../../../global.js";
 import Room from "./entities/room.js";
 import getLobbyTemplate from './templates/lobbyItem.js';
 
@@ -39,7 +39,7 @@ export default class View {
     })
   }
 
-  static updateUserImage({ img, username }:TUser) {
+  static updateUserImage({ img, username }:IAttendee) {
     imgUser.src = img
     imgUser.alt = username
   }

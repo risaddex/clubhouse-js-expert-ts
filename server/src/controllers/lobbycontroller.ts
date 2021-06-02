@@ -1,6 +1,6 @@
 import { Socket } from "socket.io"
 import { RoomData, socketEvents } from "../../../global"
-import { BaseController } from "../../types"
+import { BaseController } from "../types"
 import Event from 'events'
 
 import debug from 'debug'

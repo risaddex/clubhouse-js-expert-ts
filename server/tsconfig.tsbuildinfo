@@ -242,8 +242,8 @@
         "affectsGlobalScope": false
       },
       "../global.d.ts": {
-        "version": "d4dc6ef4d45cf767aa30ed88cf33a0cce9ad31c57623cac9e884140d0306243b",
-        "signature": "d4dc6ef4d45cf767aa30ed88cf33a0cce9ad31c57623cac9e884140d0306243b",
+        "version": "bf02eaa14a2a81c93c3fb8af670db2b6b21793448587880f93443a7093bc9c2f",
+        "signature": "bf02eaa14a2a81c93c3fb8af670db2b6b21793448587880f93443a7093bc9c2f",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/node/assert/strict.d.ts": {
@@ -561,6 +561,11 @@
         "signature": "62309f23ab3a0cc42ffe8b433b12d80e8e1acc8c84107d5aa1659a7d20bb7000",
         "affectsGlobalScope": false
       },
+      "./src/types.d.ts": {
+        "version": "5f9cfe0f2da38a5142f578af92515c5cee88f9bbf02a5a71a0864d4a1e40a8d5",
+        "signature": "5f9cfe0f2da38a5142f578af92515c5cee88f9bbf02a5a71a0864d4a1e40a8d5",
+        "affectsGlobalScope": false
+      },
       "./src/entities/attendee.ts": {
         "version": "fab207b966620c03bdfabbbbd61be3ebf46b34156c892e8a60f8067e379576db",
         "signature": "3c6c1805397456b08899527b44214963b6893eff937c29c4e3c59fecc3a331d4",
@@ -572,18 +577,18 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/lobbycontroller.ts": {
-        "version": "334965feb53ae2d8a243b9570ccffa4763853d2328082e504f5a6f30c68e565c",
-        "signature": "51a2b0a980150f016f5645cabda4609deae0672bf50acc90d5266eb1d38819d8",
+        "version": "2bab1c0a313c9f3a9d7d158928c39a6fd2d0ea4ef8ea00d733cee27cd63b821f",
+        "signature": "14c355c0da647ac75d17d4e2e859a7af3f2a5e7c9b5c6edacf17dcbcf4b9b1b4",
         "affectsGlobalScope": false
       },
       "./src/util/customMap.ts": {
-        "version": "f00b6b2dd79adf1dd048c1541b7423ec02af3f00028f11c031722d53c2a79ed4",
-        "signature": "51b59f41cd16c2f0feaa4c8e02543cca21f63986dd783c851b8609dc3c6222f8",
+        "version": "c78f5ebbdcba9d5b353d8487e93ee8a2866eaba5fc83634770e0f49a69830576",
+        "signature": "f073117f173f00f63bf84fb3dd6cac57454f5ad7003e50d87784e5ea90749eb9",
         "affectsGlobalScope": false
       },
       "./src/controllers/roomsController.ts": {
-        "version": "10a66afa4ccb812b4f63e7d8e68d8a2a700a0cb73710babf33c23b9cffc0fb68",
-        "signature": "7732ec60fb6c58eeed6ca083ed9af43cdc612da4e0bb33631d431a7b00c0ff6b",
+        "version": "47554ac93f4f401e9b9362218e5f4587712c32523928c91c3deabe24ed8a9bed",
+        "signature": "86d9c9139376c5ac59d62da79777480e196d57d8a3a6b36cf9831715251a6ad2",
         "affectsGlobalScope": false
       },
       "./src/util/socket.ts": {
@@ -594,11 +599,6 @@
       "./src/index.ts": {
         "version": "b7e153b50ea1adfe0c01fed57a955e88016218545532c5962604bb9229ad7713",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "./src/types.d.ts": {
-        "version": "f3cd98c35f338fa3f9c5c01cbe69afdca8ad0cbe0de619995e51404f5ce5cbca",
-        "signature": "f3cd98c35f338fa3f9c5c01cbe69afdca8ad0cbe0de619995e51404f5ce5cbca",
         "affectsGlobalScope": false
       }
     },
@@ -876,7 +876,8 @@
         "./node_modules/@types/debug/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/socket.io/dist/index.d.ts",
-        "./src/entities/room.ts"
+        "./src/entities/room.ts",
+        "./src/types.d.ts"
       ],
       "./src/controllers/roomsController.ts": [
         "../global.d.ts",
@@ -885,6 +886,7 @@
         "./node_modules/socket.io/dist/index.d.ts",
         "./src/entities/attendee.ts",
         "./src/entities/room.ts",
+        "./src/types.d.ts",
         "./src/util/customMap.ts"
       ],
       "./src/entities/attendee.ts": [
@@ -909,7 +911,8 @@
       ],
       "./src/util/customMap.ts": [
         "./src/entities/attendee.ts",
-        "./src/entities/room.ts"
+        "./src/entities/room.ts",
+        "./src/types.d.ts"
       ],
       "./src/util/socket.ts": [
         "../global.d.ts",
@@ -1179,7 +1182,7 @@
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/socket.io/dist/index.d.ts",
         "./src/entities/room.ts",
-        "./types.d.ts"
+        "./src/types.d.ts"
       ],
       "./src/controllers/roomsController.ts": [
         "../global.d.ts",
@@ -1187,7 +1190,7 @@
         "./node_modules/socket.io/dist/index.d.ts",
         "./src/entities/attendee.ts",
         "./src/entities/room.ts",
-        "./types.d.ts"
+        "./src/types.d.ts"
       ],
       "./src/entities/attendee.ts": [
         "../global.d.ts"
@@ -1203,7 +1206,7 @@
       "./src/util/customMap.ts": [
         "./src/entities/attendee.ts",
         "./src/entities/room.ts",
-        "./types.d.ts"
+        "./src/types.d.ts"
       ],
       "./src/util/socket.ts": [
         "../global.d.ts",
@@ -1323,49 +1326,13 @@
       "./node_modules/socket.io/dist/namespace.d.ts",
       "./node_modules/socket.io/dist/socket.d.ts",
       "./node_modules/socket.io/dist/typed-events.d.ts",
-      [
-        "./src/controllers/lobbycontroller.ts",
-        [
-          {
-            "file": "./src/controllers/lobbycontroller.ts",
-            "start": 123,
-            "length": 13,
-            "messageText": "Cannot find module '../../types' or its corresponding type declarations.",
-            "category": 1,
-            "code": 2307
-          }
-        ]
-      ],
-      [
-        "./src/controllers/roomsController.ts",
-        [
-          {
-            "file": "./src/controllers/roomsController.ts",
-            "start": 226,
-            "length": 13,
-            "messageText": "Cannot find module '../../types' or its corresponding type declarations.",
-            "category": 1,
-            "code": 2307
-          }
-        ]
-      ],
+      "./src/controllers/lobbycontroller.ts",
+      "./src/controllers/roomsController.ts",
       "./src/entities/attendee.ts",
       "./src/entities/room.ts",
       "./src/index.ts",
       "./src/types.d.ts",
-      [
-        "./src/util/customMap.ts",
-        [
-          {
-            "file": "./src/util/customMap.ts",
-            "start": 26,
-            "length": 13,
-            "messageText": "Cannot find module '../../types' or its corresponding type declarations.",
-            "category": 1,
-            "code": 2307
-          }
-        ]
-      ],
+      "./src/util/customMap.ts",
       "./src/util/socket.ts"
     ]
   },

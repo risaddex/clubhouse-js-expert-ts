@@ -1,4 +1,4 @@
-import { BaseAttendee, ListenerCallback, pages, TUser } from '../../../../../global'
+import { IAttendee, ListenerCallback, pages, TUser } from '../../../../../global'
 import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'
 
@@ -16,7 +16,7 @@ const btnClap = document.getElementById('btnClap')
 const btnLeave = document.getElementById('btnLeave')
 
 export default class View {
-  static updateUserImage({ img, username }: BaseAttendee) {
+  static updateUserImage({ img, username }: IAttendee) {
     userAvatar.src = img
     userAvatar.alt = username
   }

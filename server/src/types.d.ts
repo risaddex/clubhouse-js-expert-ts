@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { RoomData } from "../../global";
 
-declare abstract class BaseController {
+declare interface BaseController {
   onNewConnection(socket:Socket):void
 
   getEvents():Map<string, Function>

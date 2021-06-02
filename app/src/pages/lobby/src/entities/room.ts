@@ -1,7 +1,7 @@
-import { BaseRoom } from '../../../../../../global'
+import { IRoom } from '../../../../../../global'
 import Attendee from './attendee.js'
 
-export default class Room implements BaseRoom {
+export default class Room implements IRoom {
   id: string
   topic: string
   subtopic: string
@@ -20,7 +20,7 @@ export default class Room implements BaseRoom {
     speakersCount,
     attendeesCount,
     featuredAttendees,
-  }: BaseRoom) {
+  }: IRoom) {
     this.attendeesCount = attendeesCount
     this.id = id
     this.roomLink = roomLink

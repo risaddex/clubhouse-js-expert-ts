@@ -1,7 +1,11 @@
 import Event from 'events'
 
+
+
+
 declare const enum constants {
   SOCKET_URL = 'localhost:3000',
+  STORAGE_KEY = 'jsexpert:storage:user',
 }
 
 declare const enum socketEvents {
@@ -12,7 +16,7 @@ declare const enum socketEvents {
   UPGRADE_USER_PERMISSION = 'upgradeUserPermission',
 
   SPEAK_REQUEST ='speakRequest',
-  SPEAK_ANSWER = 'speakAnswer'
+  SPEAK_ANSWER = 'speakAnswer',
 }
 
 declare const enum pages {
@@ -62,7 +66,7 @@ declare interface RouteConfig {
   }
 }
 
-declare interface IRoom {
+declare type IRoom = {
   id: string
   topic: string
   attendeesCount: number
@@ -75,7 +79,7 @@ declare interface IRoom {
 
 }
 
-declare interface IAttendee {
+declare type IAttendee = {
   id?: string
   isSpeaker?: boolean
   roomId?: string
@@ -84,5 +88,3 @@ declare interface IAttendee {
   peerId?: string
 
 }
-
-

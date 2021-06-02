@@ -1,4 +1,4 @@
-import { TObserver } from "../../types"
+import { TObserver } from "../types"
 import attendee from "../entities/attendee"
 import Room from "../entities/room";
 import room from "../entities/room"

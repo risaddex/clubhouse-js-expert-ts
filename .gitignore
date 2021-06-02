@@ -2,3 +2,4 @@ node_modules
 dist
 *.js
 !polyfill.js
+server/tsconfig.tsbuildinfo

@@ -1,18 +1,19 @@
 import { Socket } from 'socket.io-client'
-import { ListenerCallback, TUser } from '../../../../../global'
+import { IAttendee, ListenerCallback, pages } from '../../../../../global'
+import UserDb from '../../_shared/userDb'
 import Room from './entities/room'
 import View from './lobby.view.js'
 import LobbySocketBuilder from './lobbySocketBuilder'
 
 type LobbyControllerDeps = {
-  user: TUser
+  user: IAttendee
   socketBuilder: LobbySocketBuilder
   socket?:Socket
   view: typeof View
 }
 
 export default class LobbyController {
-  user: TUser
+  user: IAttendee
   socketBuilder: LobbySocketBuilder
   socket: Socket
   view:typeof View
@@ -40,7 +41,7 @@ export default class LobbyController {
   }
 
   private setupViewEvents() {
-    // this.view.updateUserImage(this.user)
+    this.view.updateUserImage(this.user)
     this.view.configureCreateRoomButton()
   }
 

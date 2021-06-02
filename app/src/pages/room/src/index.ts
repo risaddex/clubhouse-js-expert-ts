@@ -6,6 +6,7 @@ import PeerBuilder from '../../_shared/peerBuilder.js'
 import RoomService from './room.service.js'
 import Media from '../../_shared/media.js'
 
+import checkDevice from '../../_shared/checkDevice.js'
 const urlParams = new URLSearchParams(window.location.search)
 const keys = ['id', 'topic']
 
@@ -47,22 +48,7 @@ async function initializeWithRetry() {
     await RoomController.initialize(dependencies)
   } catch (error) {
     console.error(error)
-    // for mobile users
-    const mobileDevicesUA = [
-      'iPhone',
-      'Android',
-      'Opera Mobi',
-      'Opera Mini',
-      'Windows Phone ',
-      'Mobile Safari',
-    ]
-    const isMobile = mobileDevicesUA.some((item) =>
-      navigator.userAgent.indexOf(item)
-    )
-
-    if (isMobile) {
-      alert(error)
-    }
+    checkDevice(error)
     setTimeout(() => {
       initializeWithRetry()
     }, 3000)

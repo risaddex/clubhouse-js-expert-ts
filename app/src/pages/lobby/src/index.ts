@@ -1,12 +1,10 @@
 import { constants, socketNamespaces } from '../../../../../global.js'
+import checkDevice from '../../_shared/checkDevice.js'
 import LobbyController from './lobby.controller.js'
 import View from './lobby.view.js'
 import LobbySocketBuilder from './lobbySocketBuilder.js'
 
-const user = {
-  img: 'https://placekitten.com/100/100',
-  username: 'Danilo_' + Date.now(),
-}
+// const user = a
 
 const socketBuilder = new LobbySocketBuilder({
   socketUrl: constants.SOCKET_URL,
@@ -20,9 +18,7 @@ const dependencies = {
 }
 
 // Será suportado no firefox 89
-// LobbyController.initialize(dependencies).catch((e) => {
-//   alert(e.message)
-// })
+// await LobbyController.initialize(dependencies)
 
 async function initializeWithRetry() {
   try {
@@ -30,21 +26,7 @@ async function initializeWithRetry() {
   } catch (error) {
     console.error(error)
     // for mobile users
-    const mobileDevicesUA = [
-      'iPhone',
-      'Android',
-      'Opera Mobi',
-      'Opera Mini',
-      'Windows Phone ',
-      'Mobile Safari',
-    ]
-    const isMobile = mobileDevicesUA.some((item) =>
-      navigator.userAgent.indexOf(item)
-    )
-
-    if (isMobile) {
-      alert(error)
-    }
+    checkDevice(error)
     setTimeout(() => {
       initializeWithRetry()
     }, 3000)
