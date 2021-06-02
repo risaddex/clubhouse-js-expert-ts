@@ -1,4 +1,4 @@
-import { BaseAttendee, BaseRoom } from '../../../global.js'
+import { IRoom } from '../../../global.js'
 import Attendee from './attendee.js'
 
 type RoomArgs = {
@@ -10,7 +10,7 @@ type RoomArgs = {
   owner: Attendee
   users: Set<Attendee>
 }
-export default class Room implements BaseRoom {
+export default class Room implements IRoom {
   id: string
   topic: string
   attendeesCount: number

@@ -109,7 +109,7 @@ export default class RoomService {
     return { isCurrentId }
   }
 
-  disconnectPeer({ peerId }: { peerId: string }) {
+  disconnectPeer({ peerId }: { peerId?: string }) {
     if (!this.peers.has(peerId)) {
       return
     }

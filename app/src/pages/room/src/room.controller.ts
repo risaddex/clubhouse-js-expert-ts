@@ -21,7 +21,7 @@ export type InitializeDeps = {
 }
 
 export default class RoomController {
-  socket: Socket
+  socket= {} as Socket
   roomInfo: RoomData
   peerBuilder: PeerBuilder
   roomService: RoomService
@@ -34,7 +34,6 @@ export default class RoomController {
     this.peerBuilder = peerBuilder
     this.roomService = roomService
     this.view = view
-    this.socket = {} as Socket
   }
 
   static async initialize(deps: InitializeDeps) {

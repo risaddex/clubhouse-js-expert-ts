@@ -1,18 +1,18 @@
 import debug from 'debug'
 import http from 'http'
 import { Server } from 'socket.io'
-import { RouteConfig, socketEvents } from '../../../global'
+import { RouteConfig, socketEvents, socketNamespaces } from '../../../global'
 
 const log = debug('server:socket')
 
 export default class SocketServer {
-  port: number
-  namespaces
   #io: Server
+  port: number
+  namespaces = {} as socketNamespaces
 
   constructor({ port }: { port: number }) {
     this.port = port
-    this.namespaces = {}
+    
   }
   // expected shape
   // [

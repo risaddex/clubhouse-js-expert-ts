@@ -48,8 +48,8 @@ declare type TUser = {
 }
 
 declare type RoomData = {
-  room: BaseRoom
-  user?: BaseAttendee
+  room: IRoom
+  user?: IAttendee
 }
 
 
@@ -62,12 +62,12 @@ declare interface RouteConfig {
   }
 }
 
-declare abstract class BaseRoom {
+declare interface IRoom {
   id: string
   topic: string
   attendeesCount: number
   speakersCount: number
-  featuredAttendees?: TUser[]
+  featuredAttendees?: IAttendee[]
   owner: TUser
   users?: Set<TUser>
   subtopic?: string
@@ -75,7 +75,7 @@ declare abstract class BaseRoom {
 
 }
 
-declare abstract class BaseAttendee {
+declare interface IAttendee {
   id?: string
   isSpeaker?: boolean
   roomId?: string

@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
-import { RoomData } from "../global";
-import Room from "./src/entities/room";
+import { RoomData } from "../../global";
 
 declare abstract class BaseController {
   onNewConnection(socket:Socket):void

@@ -1,22 +1,22 @@
-import { BaseAttendee } from '../../../../../../global'
+import { IAttendee } from '../../../../../../global'
 
 type AttendeeOptions = {
   isSpeaker: boolean
-  roomId: string
-  peerId: string
-  id: string
+  roomId?: string
+  peerId?: string
+  id?: string
   img: string
   username: string
 }
-export default class Attendee implements BaseAttendee {
+export default class Attendee implements IAttendee {
   isSpeaker: boolean
-  roomId: string
-  peerId: string
-  id: string
+  roomId?: string
+  peerId?: string
+  id?: string
   img: string
   username: string
-  lastName: string
-  firstName: string
+  lastName?: string
+  firstName?: string
 
   constructor({
     id,

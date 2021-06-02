@@ -1,6 +1,6 @@
-import { BaseAttendee } from "../../../global"
+import { IAttendee } from "../../../global"
 
-export default class Attendee implements BaseAttendee {
+export default class Attendee implements IAttendee {
     id: string
     isSpeaker: boolean
     roomId: string
@@ -8,7 +8,7 @@ export default class Attendee implements BaseAttendee {
     username: string 
     peerId?: string
 
-  constructor({ id, img, isSpeaker, roomId, username, peerId }: BaseAttendee) {
+  constructor({ id, img, isSpeaker, roomId, username, peerId }: IAttendee) {
     this.id = id
     this.img = img
     this.isSpeaker = isSpeaker

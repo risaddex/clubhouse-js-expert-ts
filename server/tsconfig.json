@@ -8,7 +8,7 @@
     "allowJs": true,
     "incremental": true,
     "outDir": "dist",
-    "types": ["node", "debug", "socket.io"]
+    "rootDir": "src"
   },
   "include": ["src/**/*.ts"]
   
