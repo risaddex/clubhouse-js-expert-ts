@@ -1,7 +1,7 @@
 import debug from 'debug'
 import Event from 'events'
 import { AddressInfo } from 'net'
-import { socketEvents } from '../../global.js'
+import { socketEvents } from './types'
 import LobbyController from './controllers/lobbycontroller.js'
 import RoomsController from './controllers/roomsController.js'
 import SocketServer from './util/socket.js'

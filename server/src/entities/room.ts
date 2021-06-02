@@ -1,4 +1,4 @@
-import { IRoom } from '../../../global.js'
+import { IRoom } from '../types'
 import Attendee from './attendee.js'
 
 type RoomArgs = {
