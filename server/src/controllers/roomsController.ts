@@ -2,7 +2,7 @@
 import debug from 'debug'
 import Event from 'events'
 import { Socket } from 'socket.io'
-import { IAttendee, socketEvents, TUser } from '../types'
+import { IAttendee, ListenerCallback, socketEvents, TUser } from '../types'
 import { BaseController } from '../types'
 import Attendee from '../entities/attendee.js'
 import Room from '../entities/room.js'
@@ -238,7 +238,7 @@ export default class RoomsController implements BaseController {
   }
 
   //@ts-expect-error
-  #updateGlobalUserData(userId: string, userData?: TUser, roomId: string) {
+  #updateGlobalUserData(userId: string, userData?: TUser, roomId?: string) {
     const user = this.#users.get(userId) ?? ({} as Attendee)
     const existingRoom = this.rooms.has(roomId)
 
@@ -254,12 +254,12 @@ export default class RoomsController implements BaseController {
     return this.#users.get(userId)
   }
 
-  getEvents(): Map<string, Function> {
+  getEvents(): Map<string, ListenerCallback> {
     //navegar entre a estrutura para pegar as funções publicas
 
     //captura o nome das funções publicas
     const functions = Reflect.ownKeys(RoomsController.prototype)
-    .filter((fn: string|Symbol ) => fn !== 'constructor')
+    .filter((fn ) => fn !== 'constructor')
       .map((name) => [name, this[name].bind(this)])
 
     return new Map(functions as any)
