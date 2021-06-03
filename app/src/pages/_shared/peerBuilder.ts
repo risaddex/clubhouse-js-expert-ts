@@ -1,5 +1,5 @@
 import Peer, { MediaConnection, PeerJSOption } from 'peerjs'
-import { ListenerCallback } from '../../../../global'
+
 
 type CustomPeerArgs = {
   config: {

@@ -1,7 +1,4 @@
-import { constants, IAttendee } from '../../../../global'
-
-const FIELD = constants.STORAGE_KEY
-
+const FIELD = constants.URLS.STORAGE_KEY
 export default class UserDb {
   static insert(data: IAttendee) {
     localStorage.setItem(FIELD, JSON.stringify(data))

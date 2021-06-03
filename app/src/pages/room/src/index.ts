@@ -1,4 +1,4 @@
-import { constants, IAttendee, RoomData, socketNamespaces } from '../../../../../global'
+
 import RoomController from './room.controller.js'
 import RoomSocketBuilder from './util/roomSocketBuilder.js'
 import View from './room.view.js'
@@ -29,8 +29,8 @@ try {
 }
 
 const socketBuilder = new RoomSocketBuilder({
-  socketUrl: constants.SOCKET_URL,
-  namespace: socketNamespaces.room,
+  socketUrl: constants.URLS.SOCKET_URL,
+  namespace: constants.socketNamespaces.room,
 })
 
 const roomService = new RoomService({
@@ -38,9 +38,13 @@ const roomService = new RoomService({
 })
 
 const peerBuilder = new PeerBuilder({
-  port: 9000,
-  host: 'localhost',
+  host:'jsexpert-peerjs-server.herokuapp.com',
+  secure:true,
   path: '/'
+
+  // port: 9000,
+  // host: 'localhost',
+  // path: '/'
 })
 
 const roomInfo: RoomData = { user, room }

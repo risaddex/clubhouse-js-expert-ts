@@ -1,4 +1,4 @@
-import { IRoom } from '../../../../../../global'
+
 import Attendee from './attendee.js'
 
 export default class Room implements IRoom {

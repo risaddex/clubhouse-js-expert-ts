@@ -1,4 +1,4 @@
-import { constants, IAttendee, socketNamespaces } from '../../../../../global.js'
+
 import checkDevice from '../../_shared/checkDevice.js'
 import UserDb from '../../_shared/userDb.js'
 import Utils from '../../_shared/utils.js'
@@ -18,8 +18,8 @@ try {
 }
 
 const socketBuilder = new LobbySocketBuilder({
-  socketUrl: constants.SOCKET_URL,
-  namespace: socketNamespaces.lobby,
+  socketUrl: constants.URLS.SOCKET_URL,
+  namespace: constants.socketNamespaces.lobby,
 })
 
 const dependencies = {

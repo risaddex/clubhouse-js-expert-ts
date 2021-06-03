@@ -1,4 +1,4 @@
-import { IAttendee } from '../../../../../../global'
+
 
 type AttendeeOptions = {
   isSpeaker: boolean

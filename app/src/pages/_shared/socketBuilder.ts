@@ -1,4 +1,4 @@
-import { ListenerCallback, socketEvents } from '../../../../global'
+
 import { ManagerOptions, Socket } from 'socket.io-client'
 //Builder design pattern
 export default class SocketBuilder {
@@ -33,8 +33,8 @@ export default class SocketBuilder {
       console.log(`Você está conectado na sala ${socket.id}.`)
     )
 
-    socket.on(socketEvents.USER_CONNECTED, this.onUserConnected)
-    socket.on(socketEvents.USER_DISCONNECTED, this.onUserDisconnected)
+    socket.on(constants.socketEvents.USER_CONNECTED, this.onUserConnected)
+    socket.on(constants.socketEvents.USER_DISCONNECTED, this.onUserDisconnected)
 
     return socket
   }

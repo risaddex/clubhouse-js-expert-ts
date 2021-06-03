@@ -1,11 +1,11 @@
-import { pages } from "../../../../global";
+
 
 export default class Utils{
   static redirectToLobby() {
-    window.location.assign(pages.lobby);
+    window.location.assign(constants.pages.lobby);
   }
   
   static redirectToLogin(){
-    window.location.assign(pages.login);
+    window.location.assign(constants.pages.login);
   }
 }

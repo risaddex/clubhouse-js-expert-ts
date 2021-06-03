@@ -1,10 +1,6 @@
 import { MediaConnection } from 'peerjs'
 import { Socket } from 'socket.io-client'
-import {
-  ListenerCallback,
-  RoomData,
-  socketEvents
-} from '../../../../../global'
+
 import PeerBuilder, { CustomPeerModule } from '../../_shared/peerBuilder.js'
 import Attendee from './entities/attendee.js'
 import RoomService from './room.service.js'
@@ -64,7 +60,7 @@ export default class RoomController {
 
   private onClapPressed(): ListenerCallback {
     return () => {
-      this.socket.emit(socketEvents.SPEAK_REQUEST, this.roomInfo.user)
+      this.socket.emit(constants.socketEvents.SPEAK_REQUEST, this.roomInfo.user)
     }
   }
 
@@ -82,7 +78,7 @@ export default class RoomController {
     return (data:Attendee) => { 
       const user = new Attendee(data)
       const result = prompt(`${user.username} pediu para falar! 1 sim, 0 não`)
-      this.socket.emit(socketEvents.SPEAK_ANSWER, {answer: !!Number(result), user})
+      this.socket.emit(constants.socketEvents.SPEAK_ANSWER, {answer: !!Number(result), user})
     }
   }
 
@@ -145,7 +141,7 @@ export default class RoomController {
     return (peer:CustomPeerModule) => {
       console.log('peer:', peer)
       this.roomInfo.user.peerId = peer.id
-      this.socket.emit(socketEvents.JOIN_ROOM, this.roomInfo)
+      this.socket.emit(constants.socketEvents.JOIN_ROOM, this.roomInfo)
     }
   }
 

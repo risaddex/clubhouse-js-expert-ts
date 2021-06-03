@@ -1,4 +1,3 @@
-import { IAttendee, ListenerCallback, pages, TUser } from '../../../../../global'
 import Utils from '../../_shared/utils.js'
 import Attendee from './entities/attendee.js'
 import getTemplate from './templates/usersTemplate.js'

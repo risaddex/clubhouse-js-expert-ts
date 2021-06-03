@@ -1,4 +1,4 @@
-import { ListenerCallback, SocketBuilderOptions, socketEvents } from '../../../../../global'
+
 import SocketBuilder from '../../_shared/socketBuilder.js'
 
 export default class LobbySocketBuilder extends SocketBuilder {
@@ -22,7 +22,7 @@ export default class LobbySocketBuilder extends SocketBuilder {
   build() {
     const socket = super.build()
 
-    socket.on(socketEvents.LOBBY_UPDATED, this.onLobbyUpdated)
+    socket.on(constants.socketEvents.LOBBY_UPDATED, this.onLobbyUpdated)
 
     return socket
   }

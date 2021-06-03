@@ -1,4 +1,4 @@
-import { TUser } from "../../../../../../global";
+
 
 export default class Attendee implements TUser {
   id?: string;
