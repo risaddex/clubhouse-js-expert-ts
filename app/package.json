@@ -2,10 +2,11 @@
   "name": "@risaddex/clubhouse-jsexpert-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npx http-server --cors -p $PORT src/.",
+    "build": "tsc",
+    "start": "npx http-server src/.",
+    "start:prod": "npx http-server  --cors -p $PORT  src/.",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
