@@ -29,7 +29,6 @@ export default class LobbyController implements BaseController {
 
     this.#activateEventProxy(socket)
   }
-  //@ts-expect-error
   #activateEventProxy(socket:Socket){
     this.roomsListener.on(socketEvents.LOBBY_UPDATED, (rooms) => {
       this.#updateLobbyRooms(socket, rooms)
@@ -50,7 +49,6 @@ export default class LobbyController implements BaseController {
     // throw new Error("Method not implemented.")
   }
 
-  // @ts-expect-error
   #updateLobbyRooms(socket:Socket, activeRooms:Room[]) {
     socket.emit(socketEvents.LOBBY_UPDATED, activeRooms)
   }

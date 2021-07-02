@@ -4,6 +4,13 @@ Seja bem vindo(a) à quarta Semana Javascript Expert.Este é o código inicial p
 
 Marque esse projeto com uma estrela 🌟
 
+## Tecnologias utilizadas
+- [socket.io (client/server - (rooms))](https://socket.io/)
+- [peerJS (WebRTC)](https://peerjs.com/)
+- [firebase (auth)](https://firebase.google.com/)
+
+## Tecnologias adicionais
+- [Typescript](https://www.typescriptlang.org/) - apenas checagem estática, transpilado para ESNext para manter compatibilidade com a proposta do evento.
 ## Preview
 
 ### Página de Login
