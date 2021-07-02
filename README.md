@@ -8,15 +8,15 @@ Marque esse projeto com uma estrela 🌟
 
 ### Página de Login
 
-<img src="./assets/printscreen/clubhouse-login.PNG" width="300" alt="Login" />
+<img src=".github/clubhouse-login.png" width="300" alt="Login" />
 
 ### Página de Salas
 
-<img src="./assets/printscreen/clubhouse-home.PNG" width="300" alt="Home" />
+<img src=".github/clubhouse-home.png" width="300" alt="Home" />
 
 ### Página de Sala
 
-<img src="./assets/printscreen/clubhouse-room.PNG" width="300" alt="Room" />
+<img src=".github/clubhouse-room.png" width="300" alt="Room" />
 
 ## Checklist Features
 

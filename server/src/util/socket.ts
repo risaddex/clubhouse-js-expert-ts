@@ -8,7 +8,7 @@ const log = debug('server:socket')
 export default class SocketServer {
   #io: Server
   port: number
-  namespaces = {} as constants.socketNamespaces
+  namespaces = {} as socketNamespaces
 
   constructor({ port }: { port: number }) {
     this.port = port
