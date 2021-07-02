@@ -136,7 +136,7 @@ export default class View {
   
   static _toggleMicrophoneIcon() {
     const icon = btnMicrophone.firstElementChild
-    const classes = [...icon.classList]
+    const classes = [...Array.from(icon.classList)]
     
     const inactiveMicClass = 'fa-microphone-slash'
     const activeMicClass = 'fa-microphone'

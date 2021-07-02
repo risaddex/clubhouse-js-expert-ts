@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "module": "ESNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -7,6 +8,7 @@
     "moduleResolution": "node",
     "allowJs": true,
     "allowUmdGlobalAccess": true,
+    "rootDir": "src"
   },
-  "exclude": ["**/**.js"]
+  "include": ["src"]
 }

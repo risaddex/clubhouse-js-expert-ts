@@ -1,5 +1,5 @@
-import Attendee from '../entities/attendee'
-import Room from '../entities/room'
+import Attendee from '../entities/attendee.js'
+import Room from '../entities/room.js'
 
 function createFeaturedSpeakersTemplate(featuredAttendees:Attendee[]) {
   if (!featuredAttendees.length) return '';

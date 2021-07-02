@@ -63,4 +63,4 @@ const provider = new firebase.auth.GithubAuthProvider()
 provider.addScope('read:user')
 
 const btnLogin = document.getElementById('btnLogin')
-btnLogin.addEventListener('click', onLogin({ provider, firebase }))
+btnLogin?.addEventListener('click', onLogin({ provider, firebase }))

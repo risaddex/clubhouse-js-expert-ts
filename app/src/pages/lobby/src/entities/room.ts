@@ -8,7 +8,7 @@ export default class Room implements IRoom {
   roomLink: string
   attendeesCount: number
   speakersCount: number
-  featuredAttendees?: Attendee[]
+  featuredAttendees: Attendee[]
   owner: Attendee
 
   constructor({
@@ -19,11 +19,11 @@ export default class Room implements IRoom {
     roomLink,
     speakersCount,
     attendeesCount,
-    featuredAttendees,
+    featuredAttendees = [] as Attendee[],
   }: IRoom) {
     this.attendeesCount = attendeesCount
     this.id = id
-    this.roomLink = roomLink
+    this.roomLink = roomLink as string
     this.subtopic = subtopic || 'Semana JS Expert 4.0'
     this.owner = new Attendee(owner)
     this.speakersCount = speakersCount

@@ -27,7 +27,7 @@ coverage
 
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
-
+node_modules
 # Bower dependency directory (https://bower.io/)
 bower_components
 
@@ -83,6 +83,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+build
 
 # Gatsby files
 .cache/

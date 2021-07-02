@@ -38,7 +38,7 @@ const roomService = new RoomService({
 })
 
 const peerBuilder = new PeerBuilder({
-  host:'jsexpert-peerjs-server.herokuapp.com',
+  host:'jsexpert-peer-server.herokuapp.com',
   secure:true,
   path: '/'
 
